@@ -1,29 +1,40 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
+import SubNavbar from './SubNavbar'
 import { ReactElement, useState } from 'react';
 
 import Logo from "../public/uptempo-log-wh.png"
 import ControlIcon from "../public/icons8-touchscreen-30.png"
 import DevicelIcon from "../public/icons8-smartphones-30.png"
 import SettinglIcon from "../public/icons8-settings.gif"
+import { passThroughSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 
 export default function Navbar() {
-    const [menuImage, setMenuImage] = useState(null);
-    const [menuText, setMenuText] = useState(null);
+    const [menuId, setMenuId] = useState(-1);
+    const [titleImage, setTitleImage] = useState(null);
+    const navbarContent = [
+        {id:1, content:'Control', imageIcon:ControlIcon},
+        {id:2, content:'Device', imageIcon:DevicelIcon},
+        {id:3, content:'Setting', imageIcon:DevicelIcon}
+    ]
 
     return (
         <>
             <nav className='flex items-center flex-wrap bg-[#2b3d51]'>
-                <Link href='/'>
-                    <a className='inline-flex items-center ml-4'>
-                        <Image
-                            src={Logo}
-                            width='160'
-                            height='60'
-                        />
-                    </a>
-                </Link>
+                <div
+                    onMouseEnter={() => {setTitleImage('rotate-6')}}
+                    onMouseLeave={() => {setTitleImage(null)}}>
+                    <Link href='/'>
+                        <a className='inline-flex items-center ml-4'>
+                            <Image
+                                src={Logo}
+                                width='210'
+                                height='80'
+                            />
+                        </a>
+                    </Link>
+                </div>
                 <button className='inline-flex p-3 hover:bg-green-600 rounded lg:hidden text-white ml-auto hover:text-white outline-none'>
                     <svg
                         className='w-6 h-6'
@@ -41,42 +52,7 @@ export default function Navbar() {
                     </svg>
                 </button>
             </nav>
-
-            <nav className='flex items-center flex-wrap bg-[#f08583]'>
-                <div
-                    onMouseEnter={() => {setMenuImage('rotate-6'), setMenuText('text-[#2b3d51]')}}
-                    onMouseLeave={() => {setMenuImage(null), setMenuText(null)}}>
-                    <Link href='/'>
-                        <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center'>
-                            <Image
-                                src={ControlIcon}
-                                className={menuImage}
-                            />
-                            <span className={menuText}>
-                                Control
-                            </span>
-                        </a>
-                    </Link>
-                </div>
-                <Link href='/'>
-                    <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center hover:text-[#2b3d51]'>
-                        <Image
-                            src={DevicelIcon}
-                            className={menuImage}
-                        />
-                        Device
-                    </a>
-                </Link>
-                <Link href='/'>
-                    <a className='lg:inline-flex lg:w-auto w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center hover:text-[#2b3d51]'>
-                        <Image
-                            src={DevicelIcon}
-                            className={menuImage}
-                        />
-                        Setting
-                    </a>
-                </Link>
-            </nav>
+            <SubNavbar />
         </>
     )
 }
