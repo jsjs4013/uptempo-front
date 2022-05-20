@@ -8,9 +8,9 @@ import DevicelIcon from "../public/icons8-smartphones-30.png"
 
 export default function Navbar(props) {
     const navbarContent = [
-        {id:1, content:'Control', imageIcon:ControlIcon, route:'/'},
+        {id:1, content:'Control', imageIcon:ControlIcon, route:'/control'},
         {id:2, content:'Device', imageIcon:DevicelIcon, route:'/device'},
-        {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/'}
+        {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/setting'}
     ]
     const div = []
 
