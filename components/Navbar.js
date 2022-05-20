@@ -10,21 +10,16 @@ import DevicelIcon from "../public/icons8-smartphones-30.png"
 import SettinglIcon from "../public/icons8-settings.gif"
 import { passThroughSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 
-export default function Navbar() {
-    const [menuId, setMenuId] = useState(-1);
-    const [titleImage, setTitleImage] = useState(null);
-    const navbarContent = [
-        {id:1, content:'Control', imageIcon:ControlIcon},
-        {id:2, content:'Device', imageIcon:DevicelIcon},
-        {id:3, content:'Setting', imageIcon:DevicelIcon}
-    ]
+export default function Navbar(props) {
+    const [active, setActive] = useState(false);
+    const handleClick = () => {
+        setActive(!active);
+    };
 
     return (
         <>
             <nav className='flex items-center flex-wrap bg-[#2b3d51]'>
-                <div
-                    onMouseEnter={() => {setTitleImage('rotate-6')}}
-                    onMouseLeave={() => {setTitleImage(null)}}>
+                <div>
                     <Link href='/'>
                         <a className='inline-flex items-center ml-4'>
                             <Image
@@ -35,7 +30,8 @@ export default function Navbar() {
                         </a>
                     </Link>
                 </div>
-                <button className='inline-flex p-3 hover:bg-green-600 rounded lg:hidden text-white ml-auto hover:text-white outline-none'>
+                <button className='inline-flex p-3 rounded lg:hidden text-white ml-auto hover:text-white outline-none'
+                    onClick={handleClick}>
                     <svg
                         className='w-6 h-6'
                         fill='none'
@@ -52,7 +48,7 @@ export default function Navbar() {
                     </svg>
                 </button>
             </nav>
-            <SubNavbar />
+            <SubNavbar currentPage={props.currentPage} active={active}/>
         </>
     )
 }

@@ -5,14 +5,16 @@ import Navbar from '../components/Navbar'
 import Logo from "../public/logo.svg"
 
 export default function Home() {
-  return (
+    let currentPage = 2
+    
+    return (
       <>
         <Head>
           <title>Create Next App</title>
           <meta name="description" content="Up-tempo device farm device" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <Navbar />
+        <Navbar currentPage={currentPage}/>
         
         <section class="bg-white">
         <div class="container px-6 py-8 mx-auto">
