@@ -7,13 +7,13 @@ import { ReactElement, useState } from 'react';
 import Logo from "../public/uptempo-log-wh.png"
 import ControlIcon from "../public/icons8-touchscreen-30.png"
 import DevicelIcon from "../public/icons8-smartphones-30.png"
-import SettinglIcon from "../public/icons8-settings.gif"
 import { passThroughSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 
 export default function Navbar(props) {
     const [active, setActive] = useState(false);
     const handleClick = () => {
         setActive(!active);
+        {console.log('asdadasd')}
     };
 
     return (
@@ -24,8 +24,8 @@ export default function Navbar(props) {
                         <a className='inline-flex items-center ml-4'>
                             <Image
                                 src={Logo}
-                                width='210'
-                                height='80'
+                                width='140'
+                                height='50'
                             />
                         </a>
                     </Link>
@@ -48,7 +48,7 @@ export default function Navbar(props) {
                     </svg>
                 </button>
             </nav>
-            <SubNavbar currentPage={props.currentPage} active={active}/>
+            <SubNavbar currentPage={props.currentPage} active={active} changeState={handleClick}/>
         </>
     )
 }

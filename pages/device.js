@@ -11,83 +11,124 @@ export default function Device() {
     return (
         <Layout>
             <Navbar currentPage={currentPage} />
-            <section class="bg-white">
-                <div class="container px-6 py-8 mx-auto">
-                    <div class="lg:flex lg:-mx-2">
+            <section className="bg-white">
+                <div className="container px-6 py-8 mx-auto">
+                    <div className="lg:flex lg:-mx-2">
                         <div class="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Jackets & Coats</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Hoodies</a>
-                            <a href="#" class="block font-medium dark:text-blue-900 hover:underline">T-shirts & Vests</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Shirts</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Blazers & Suits</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Jeans</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Trousers</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Shorts</a>
-                            <a href="#" class="block font-medium dark:text-gray-900 hover:underline">Underwear</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Jackets & Coats</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Hoodies</a>
+                            <a href="#" className="block font-bold text-blue-900 hover:underline">T-shirts & Vests</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Shirts</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Blazers & Suits</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Jeans</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Trousers</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Shorts</a>
+                            <a href="#" className="block font-medium text-gray-900 hover:underline">Underwear</a>
                         </div>
 
-                        <div class="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
-                            <div class="flex items-center justify-between text-sm tracking-widest uppercase ">
-                                <p class="text-gray-500 dark:text-gray-900">6 Items</p>
-                                <div class="flex items-center">
-                                    <p class="text-gray-500 dark:text-gray-900">Sort</p>
-                                    <select class="font-medium text-gray-900 bg-transparent dark:text-gray-900 focus:outline-none">
-                                        <option value="#">Recommended</option>
-                                        <option value="#">Size</option>
-                                        <option value="#">Price</option>
+                        <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
+                            <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
+                                <p className="text-gray-500 dark:text-gray-900">5 Items</p>
+                                <div className="flex items-center">
+                                    <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
+                                    <label for="underline_select" class="sr-only">Underline select</label>
+                                    <select id="underline_select" class="block py-2.5 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                        <option selected>참고</option>
+                                        <option value="#">추가기능</option>
+                                        <option value="#">정렬같은거</option>
+                                        <option value="#">할 수 있음</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                <div className="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
+                            <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
                                     <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <img class="object-cover w-full rounded-md h-72 xl:h-80" src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80" alt="T-Shirt" />
+                                        <Image
+                                            src='/Galaxy/samsung-galaxy-a73-5g.jpeg'
+                                            className='object-cover w-full rounded-md h-72 xl:h-80'
+                                            height={200}
+                                            width={150}
+                                            alt='Galaxy'
+                                        />
                                     </div>
-                                    <h4 class="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Printed T-shirt</h4>
-                                    <p class="text-blue-900">$12.55</p>
+                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy A73 5G</h4>
+                                    <p className="text-blue-900">SAMSUNG</p>
 
-                                    <button class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span class="mx-1">예약하기</span>
+                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                        <span className="mx-1">예약하기</span>
                                     </button>
                                 </div>
 
-                                <div class="flex flex-col items-center justify-center bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md w-full max-w-lg mx-auto">
-                                    <img class="object-cover w-full rounded-md h-72 xl:h-80" src="https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=966&q=80" alt="T-Shirt" />
-                                    <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200"> Slub jersey T-shirt</h4>
-                                    <p class="text-blue-500">$18.70</p>
+                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                        <Image
+                                            src='/Galaxy/samsung-galaxy-m53-5g.jpeg'
+                                            className='object-cover w-full rounded-md h-72 xl:h-80'
+                                            height={200}
+                                            width={150}
+                                            alt='Galaxy'
+                                        />
+                                    </div>
+                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy M53 5G</h4>
+                                    <p className="text-blue-900">SAMSUNG</p>
 
-                                    <button class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                                        </svg>
-                                        <span class="mx-1">Add to cart</span>
+                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                        <span className="mx-1">예약하기</span>
                                     </button>
                                 </div>
 
-                                <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                                    <img class="object-cover w-full rounded-md h-72 xl:h-80" src="https://images.unsplash.com/photo-1603320409990-02d834987237?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="T-Shirt" />
-                                    <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200">T-shirt with a motif</h4>
-                                    <p class="text-blue-500">$16.55</p>
+                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                        <Image
+                                            src='/Galaxy/samsung-galaxy-s20-fe-5g.jpeg'
+                                            className='object-cover w-full rounded-md h-72 xl:h-80'
+                                            height={200}
+                                            width={150}
+                                            alt='Galaxy'
+                                        />
+                                    </div>
+                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy S20 FE 5G</h4>
+                                    <p className="text-blue-900">SAMSUNG</p>
 
-                                    <button class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                                        </svg>
-                                        <span class="mx-1">Add to cart</span>
+                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                        <span className="mx-1">예약하기</span>
                                     </button>
                                 </div>
 
-                                <div class="flex flex-col items-center justify-center w-full max-w-lg mx-auto">
-                                    <img class="object-cover w-full rounded-md h-72 xl:h-80" src="https://images.unsplash.com/photo-1603320410149-db26b12d5c2b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=634&q=80" alt="T-Shirt" />
-                                    <h4 class="mt-2 text-lg font-medium text-gray-700 dark:text-gray-200">Art T-shirt</h4>
-                                    <p class="text-blue-500">$12.55</p>
+                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                        <Image
+                                            src='/iphone/apple-iphone-13-pro.jpeg'
+                                            className='object-cover w-full rounded-md h-72 xl:h-80'
+                                            height={200}
+                                            width={150}
+                                            alt='iPhone'
+                                        />
+                                    </div>
+                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
+                                    <p className="text-blue-900">APPLE</p>
 
-                                    <button class="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                                        </svg>
-                                        <span class="mx-1">Add to cart</span>
+                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                        <span className="mx-1">예약하기</span>
+                                    </button>
+                                </div>
+                                
+                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                        <Image
+                                            src='/iphone/apple-iphone-13-pro.jpeg'
+                                            className='object-cover w-full rounded-md h-72 xl:h-80'
+                                            height={200}
+                                            width={150}
+                                            alt='iPhone'
+                                        />
+                                    </div>
+                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
+                                    <p className="text-blue-900">APPLE</p>
+
+                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                        <span className="mx-1">예약하기</span>
                                     </button>
                                 </div>
                             </div>
