@@ -7,6 +7,7 @@ import dummyData from "../pages/dummy/regDataDummy"
 import { useState, useEffect, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faCalendar } from '@fortawesome/free-solid-svg-icons'
+import dynamic from 'next/dynamic'
 
 export default function Register() {
     let currentPage = 7;
@@ -79,55 +80,78 @@ export default function Register() {
                             </div>
                             <button className="bg-[#2b3d51] hover:bg-gray-900 text-white font-bold rounded w-32 h-12 max-w-lg min-w-fit" onClick={null}>예약 신청</button>
                         </div>
-                        <div name='board' className='flex place-content-center border-t border-gray-300'>
-                            <table className="container">
-                                <thead id="tb_tr" className='border-b border-gray-300'>
-                                    {/** 날짜는 자동 계산 */}
-                                    <tr className='text-2xl'>
-                                        <th className='border-r border-gray-300'></th>
-                                        <th className='border-r border-gray-300 px-8'>23</th>
-                                        <th className='border-r border-gray-300 px-8'>24</th>
-                                        <th className='border-r border-gray-300 px-8'>25</th>
-                                        <th className='border-r border-gray-300 px-8'>26</th>
-                                        <th className='border-r border-gray-300 px-8'>27</th>
-                                        <th className='border-r border-gray-300 px-8'>28</th>
-                                        <th className='border-r border-gray-300 px-8'>29</th>
-                                    </tr>
-                                    <tr>
-                                        <th className='border-r border-gray-300'></th>
-                                        <th className='border-r border-gray-300'>월</th>
-                                        <th className='border-r border-gray-300'>화</th>
-                                        <th className='border-r border-gray-300'>수</th>
-                                        <th className='border-r border-gray-300'>목</th>
-                                        <th className='border-r border-gray-300'>금</th>
-                                        <th className='border-r border-gray-300'>토</th>
-                                        <th className='border-r border-gray-300'>일</th>
-                                    </tr>
-                                </thead>
-                                <tbody className='text-gray-500'>
-                                    <td className='border-r border-gray-300'>
-                                        <tr>08:00</tr>
-                                        <tr>09:00</tr>
-                                        <tr>10:00</tr>
-                                        <tr>11:00</tr>
-                                        <tr>12:00</tr>
-                                        <tr>13:00</tr>
-                                        <tr>14:00</tr>
-                                        <tr>15:00</tr>
-                                        <tr>16:00</tr>
-                                        <tr>17:00</tr>
-                                        <tr>18:00</tr>
-                                        <tr>19:00</tr>
-                                    </td>
-                                    {/** 데이터로 생성 
-                                    <td>
-                                        <tr>
-                                        ......
-                                        </tr>
-                                    </td>
-                                    */}
-                                </tbody>
-                            </table>
+                        <div name='board' className='container place-content-center border-t border-gray-300'>
+                            {/** 변경 대상 */}
+                            <div>
+                                <div name="dd" className='grid grid-cols-8 text-center'>
+                                    <div></div>
+                                    <div>22</div>
+                                    <div>23</div>
+                                    <div>24</div>
+                                    <div>25</div>
+                                    <div>26</div>
+                                    <div>27</div>
+                                    <div>28</div>
+                                </div>
+                                <div className='grid grid-cols-8 text-center border-b border-gray-300'>
+                                    <div></div>
+                                    <div>일</div>
+                                    <div>월</div>
+                                    <div>화</div>
+                                    <div>수</div>
+                                    <div>목</div>
+                                    <div>금</div>
+                                    <div>토</div>
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-8 text-center'>
+                                <div name = "time_row" className='grid border-r border-gray-300 grid-rows-27'>
+                                    <div><br/></div>
+                                    <div className='row-span-2'>08:00</div>
+                                    <div className='row-span-2'>09:00</div>
+                                    <div className='row-span-2'>10:00</div>
+                                    <div className='row-span-2'>11:00</div>
+                                    <div className='row-span-2'>12:00</div>
+                                    <div className='row-span-2'>13:00</div>
+                                    <div className='row-span-2'>14:00</div>
+                                    <div className='row-span-2'>15:00</div>
+                                    <div className='row-span-2'>16:00</div>
+                                    <div className='row-span-2'>17:00</div>
+                                    <div className='row-span-2'>18:00</div>
+                                    <div className='row-span-2'>19:00</div>
+                                </div>
+                                <div name = "sun_rev" className='grid grid-rows-23'>
+                                    <div>1</div>
+                                    <div>2</div>
+                                    <div>3</div>
+                                    <div>4</div>
+                                    <div>5</div>
+                                    <div>6</div>
+                                    <div>7</div>
+                                    <div>8</div>
+                                    <div>9</div>
+                                    <div>10</div>
+                                    <div>11</div>
+                                    <div>12</div>
+                                    <div>13</div>
+                                    <div>14</div>
+                                    <div>15</div>
+                                    <div>16</div>
+                                    <div>17</div>
+                                    <div>18</div>
+                                    <div>19</div>
+                                    <div>20</div>
+                                    <div>21</div>
+                                    <div>22</div>
+                                    <div>23</div>
+                                </div>
+                                <div name = "mon_rev" className='grid grid-rows-27'></div>
+                                <div name = "tue_rev" className='grid grid-rows-27'></div>
+                                <div name = "wed_rev" className='grid grid-rows-27'></div>
+                                <div name = "thu_rev" className='grid grid-rows-27'></div>
+                                <div name = "fri_rev" className='grid grid-rows-27'></div>
+                                <div name = "sat_rev" className='grid grid-rows-27'></div>
+                            </div>
                         </div>
                     </div>
                 </div>
