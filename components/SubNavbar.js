@@ -22,7 +22,7 @@ export default function Navbar(props) {
         let menuContent = navbarContent[i]
 
         div.push(
-            <div>
+            <div key={menuContent.id}>
                 <Link href={menuContent.route}>
                     <a className='group flex w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center'>
                         <Image
@@ -42,13 +42,32 @@ export default function Navbar(props) {
 
     return (
         <>
-            <nav class>
-                <section className={props.active ? `flex flex-col items-start transition duration-500 ease-in-out origin-top w-full absolute opacity-95 bg-[#f08583] z-10` : 'flex flex-col items-start scale-y-0 absolute w-full lg:scale-y-100 lg:relative lg:flex lg:flex-row transition duration-200 ease-in-out origin-top bg-[#f08583]'}>
+            <nav className='sticky top-0 z-30'>
+                <section className={props.active ? `scale-y-0 lg:scale-y-100 flex flex-row items-start lg:relative w-full absolute opacity-95 bg-[#f08583]` : 'flex flex-row items-start scale-y-0 absolute w-full lg:scale-y-100 lg:relative transition duration-500 ease-in-out origin-top bg-[#f08583]'}>
                     
                     {div}
+                    <div className='inline-flex p-2 ml-auto'>
+                        <Image
+                            src='/ktds_main.png'
+                            width={48}
+                            height={20}
+                        />
+                    </div>
+                </section>
+
+                {/* 반응형 서브 네비게이션바 */}
+                <section className={props.active ? `lg:hidden flex flex-col items-start transition duration-500 ease-in-out origin-top w-full absolute opacity-95 bg-[#f08583]` : 'flex flex-col items-start scale-y-0 absolute w-full transition duration-200 ease-in-out origin-top bg-[#f08583]'}>
+                    
+                    {div}
+                    <div className='inline-flex p-2 ml-auto'>
+                        <Image
+                            src='/ktds_main.png'
+                            width={48}
+                            height={20}
+                        />
+                    </div>
                 </section>
             </nav>
-            <div className='absolute w-full h-full bg-[#2b3d51] opacity-50 z-1'>asd</div>
         </>
     )
 }

@@ -2,8 +2,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar'
-import Logo from "../public/logo.svg"
 import Layout from '../components/Layout'
+import dynamic from 'next/dynamic'
+
+const {Dynamicscreen, Dya} = dynamic(
+  () => import {{ Desktop, Phone } from '../components/Device_screen'},
+  { ssr: false }
+)
 
 export default function Device() {
     let currentPage = 2
@@ -11,19 +16,33 @@ export default function Device() {
     return (
         <Layout>
             <Navbar currentPage={currentPage} />
+            <Dynamicscreen>
+                Hi
+            </Dynamicscreen>
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
                     <div className="lg:flex lg:-mx-2">
-                        <div class="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Jackets & Coats</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Hoodies</a>
-                            <a href="#" className="block font-bold text-blue-900 hover:underline">T-shirts & Vests</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Shirts</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Blazers & Suits</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Jeans</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Trousers</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Shorts</a>
-                            <a href="#" className="block font-medium text-gray-900 hover:underline">Underwear</a>
+                        <div className="space-y-3 tracking-widest mt-2 lg:w-1/5 lg:px-2 lg:space-y-2">
+                            <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
+                                <p className='text-white font-bold mt-2 mb-2'>제조사</p>
+                            </div>
+                            <div className='flex flex-col items-left ml-7'>
+                                <a href="#" className="block font-bold text-blue-900 hover:underline">ALL</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">APPLE</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">SAMSUNG</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">LG</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">etc</a>
+                            </div>
+                            <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
+                                <p className='text-white font-medium mt-2 mb-2'>OS</p>
+                            </div>
+                            <div className='flex flex-col items-left ml-7'>
+                                <a href="#" className="block font-bold text-blue-900 hover:underline">ALL</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">APPLE</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">ANDROID</a>
+                                <a href="#" className="block font-medium text-gray-500 hover:underline">IOS</a>
+                                <a href="#" className="block font-bold text-gray-500 hover:underline">etc</a>
+                            </div>
                         </div>
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
@@ -31,12 +50,12 @@ export default function Device() {
                                 <p className="text-gray-500 dark:text-gray-900">5 Items</p>
                                 <div className="flex items-center">
                                     <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
-                                    <label for="underline_select" class="sr-only">Underline select</label>
-                                    <select id="underline_select" class="block py-2.5 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                                        <option selected>참고</option>
-                                        <option value="#">추가기능</option>
-                                        <option value="#">정렬같은거</option>
-                                        <option value="#">할 수 있음</option>
+                                    <label htmlFor="underline_select" className="sr-only">Underline select</label>
+                                    <select id="underline_select" className="block py-2.5 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                        <option defaultValue>출시일</option>
+                                        <option value="#">제품명</option>
+                                        <option value="#">사용가능한 기기</option>
+                                        <option value="#">예약가능한 기기</option>
                                     </select>
                                 </div>
                             </div>
