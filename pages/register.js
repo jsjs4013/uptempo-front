@@ -6,51 +6,60 @@ import dummyData from "../pages/dummy/regDataDummy"
 //import Link from 'next/link'
 import { useState, useEffect, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faCalendar } from '@fortawesome/free-solid-svg-icons'
-import dynamic from 'next/dynamic'
+import { faArrowLeft, faArrowRight, faCalendar, faPray } from '@fortawesome/free-solid-svg-icons'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
 
 export default function Register() {
     let currentPage = 7;
-    let l_today = new Date();
-
-    let state = {
-        deviceName : "Galaxy S22",
-        originDate : l_today,
-        now: l_today,
-        data : []
-    };
-
     const [data, setData] = useState(dummyData.regData);    
-    const handleIncreaseDate = () => {
-        this.setState({
-            now : now.setDate(now.getDate() + 1)
-        })
+    const [now, setNow] = useState(new Date());
+    const [deviceName, setDeviceName] = useState("Galaxy S22");
+
+    const handleNewWeekdays = () => {
+        let now_day = now.getDay();
+        let start_date = new Date();
+        start_date.setDate(now.getDate()-now_day);
+        let weekDays = [];
+        for(var i = 0; i < 7; i++){
+            var temp = new Date();
+            temp.setDate(start_date.getDate() + i);
+            weekDays.push(temp);
+        }
+        return weekDays;
     }
 
-    // const handleDecreaseDate = () => {
-    //     this.setState({
-    //         now : now.setDate(now.getDate() - 1)
-    //     })
-    // }
+    const [weekDays, setWeekDays] = useState(handleNewWeekdays(now));
 
+    const handleIncreaseWeek = () => {
+        const promies = new Promise((resolve, reject) => {
+            setNow(now.setDate(now.getDate() + 7))
+            if(typeof now === "string"|| typeof now !== Date) setNow(new Date(now))
+        });
+        promies.then(
+            setWeekDays(handleNewWeekdays())   
+        );
+    }
 
-    // const handleVerticalScroll = () => {
-    //     if(true){ // 스크롤이 오른쪽으로 식별
-    //         handleIncreaseDate();
-    //         if((this.state.now - this.state.originDate) > 10){
-    //             this.setState({
-    //                 originDate : now
-    //                 // 정보 갱신 함수 필요
-    //             })
-    //         }
-    //     }
-    //     else if(false){ // 스크롤이 왼쪽으로 식별
-    //         handleDecreaseDate();
-    //         if((this.state.originDate - this.state.now) > 10){
+    const handleDecreaseWeek = () => {
+        const promies = new Promise((resolve, reject) => {
+            setNow(now.setDate(now.getDate() - 7))
+            if(typeof now === "string"|| typeof now !== Date) setNow(new Date(now))
+        });
+        promies.then(
+            setWeekDays(handleNewWeekdays())   
+        );
+    }
 
-    //         }
-    //     }
-    // }
+    const handleSelectDate = (now) => {
+        const promies = new Promise((resolve, reject) => {
+            setNow(now);
+            if(typeof now === "string"|| typeof now !== Date) setNow(new Date(now))
+        })
+        promies.then(
+            setWeekDays(handleNewWeekdays())
+        )
+    }
 
     return(
         <Layout>
@@ -58,50 +67,70 @@ export default function Register() {
             <section className="bg-white">
                 <div className='container px-6 py-8 mx-auto'>
                     <div name="nameBar" className='py-2'>
-                        <p className='text-2xl pl-2 pb-4' name='deviceName'>{state.deviceName} 예약 현황</p>
+                        <p className='text-2xl pl-2 pb-4' name='deviceName'>{deviceName} 예약 현황</p>
                         <hr className='border border-black'/>
                     </div>
                     <div name="time_board" className='border border-gray-300 rounded-t-lg mt-4'>
-                        <div name='board_head' className='flex py-3 items-center place-content-around'>
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500">
-                                    <FontAwesomeIcon icon={faCalendar} />
-                                </div>
-                                <input datepicker="" datepicker-title="Flowbite datepicker" type="text" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="날짜 선택"/>
+                        <div name='board_head' className='grid grid-cols-3 py-3 content-center place-items-center place-content-around'>
+                            <div>
+                                <DatePicker selected={now} onChange={(now) => handleSelectDate(now)}
+                                            peekNextMonth
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"
+                                />
                             </div>
                             <div className='flex items-center'>
-                            <button type="button" className="text-gray-700 border border-gray-300 hover:bg-gray-700 hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+                            <button type="button" 
+                                    className="text-gray-700 border border-gray-300 hover:bg-gray-700 hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                                    onClick={handleDecreaseWeek}
+                            >
                                 <FontAwesomeIcon icon={faArrowLeft} />
                             </button>
-                            <p className='m-5 text-xl font-medium'>{state.now.getFullYear()}년 {state.now.getMonth()+1}월</p>
-                            <button type="button" className="text-gray-700 border border-gray-300 hover:bg-gray-700 hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+                            <p className='m-5 text-xl font-medium'>{now.getFullYear()}년 {now.getMonth()+1}월 {now.getDate()}일</p>
+                            <button type="button" 
+                                    className="text-gray-700 border border-gray-300 hover:bg-gray-700 hover:text-white font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center"
+                                    onClick={handleIncreaseWeek}
+                            >
                                 <FontAwesomeIcon icon={faArrowRight} />
                             </button>
                             </div>
                             <button className="bg-[#2b3d51] hover:bg-gray-900 text-white font-bold rounded w-32 h-12 max-w-lg min-w-fit" onClick={null}>예약 신청</button>
                         </div>
                         <div name='board' className='container place-content-center border-t border-gray-300'>
-                            {/** 변경 대상 */}
                             <div>
-                                <div name="dd" className='grid grid-cols-8 text-center'>
-                                    <div></div>
-                                    <div>22</div>
-                                    <div>23</div>
-                                    <div>24</div>
-                                    <div>25</div>
-                                    <div>26</div>
-                                    <div>27</div>
-                                    <div>28</div>
+                                <div name="dd" className='grid grid-cols-8 border-b border-gray-300 text-center text-2xl py-2'>
+                                    <div/>
+                                    <div onClick={() => { handleSelectDate(weekDays[0]) }}>
+                                        <p className="text-red-700">{weekDays[0].getDate()}</p>
+                                        <p className="text-red-700 text-xl">일</p>
+                                    </div>
+                                    <div>
+                                        <p>{weekDays[1].getDate()}</p>
+                                        <p className='text-xl'>월</p>
+                                    </div>
+                                    <div>
+                                        <p>{weekDays[2].getDate()}</p>
+                                        <p className='text-xl'>화</p>
+                                    </div>
+                                    <div>
+                                        <p>{weekDays[3].getDate()}</p>
+                                        <p className='text-xl'>수</p>
+                                    </div>
+                                    <div>
+                                        <p>{weekDays[4].getDate()}</p>
+                                        <p className='text-xl'>목</p>
+                                    </div>
+                                    <div>
+                                        <p>{weekDays[5].getDate()}</p>
+                                        <p className='text-xl'>금</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-blue-700">{weekDays[6].getDate()}</p>
+                                        <p className="text-blue-700 text-xl">토</p>
+                                    </div>
                                 </div>
-                                <div className='grid grid-cols-8 text-center border-b border-gray-300'>
-                                    <div></div>
-                                    <div>일</div>
-                                    <div>월</div>
-                                    <div>화</div>
-                                    <div>수</div>
-                                    <div>목</div>
-                                    <div>금</div>
-                                    <div>토</div>
+                                <div className='grid grid-cols-8 text-center  text-xl pb-2'>
                                 </div>
                             </div>
                             <div className='grid grid-cols-8 text-center'>
