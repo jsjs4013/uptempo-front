@@ -13,20 +13,26 @@ export default function Navbar(props) {
         {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/setting'},
         {id:4, content:'Register', imageIcon:DevicelIcon, route:'register'}
     ]
+    const changeClick = () => {
+        props.changeState();
+    };
+
     const div = []
 
     for(let i=0;i<navbarContent.length;i++) {
         let menuContent = navbarContent[i]
 
         div.push(
-            <div>
+            <div key={menuContent.id}>
                 <Link href={menuContent.route}>
-                    <a className='group lg:inline-flex lg:w-auto w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center'>
+                    <a className='group flex w-full px-3 py-2 ml-4 rounded text-white font-bold items-center justify-center'>
                         <Image
                             src={menuContent.imageIcon}
-                            className= {props.currentPage === menuContent.id ? 'rotate-6' : 'group-hover:rotate-6'}
+                            className={props.currentPage === menuContent.id ? "rotate-6" : "group-hover:rotate-6"}
+                            width={23}
+                            height={23}
                         />
-                        <span className= {props.currentPage === menuContent.id ? 'text-[#2b3d51]' : 'group-hover:text-[#2b3d51]'}>
+                        <span className= {`${props.currentPage === menuContent.id ? 'text-[#2b3d51]' : 'group-hover:text-[#2b3d51]'} text-sm`}>
                             {menuContent.content}
                         </span>
                     </a>
@@ -36,10 +42,33 @@ export default function Navbar(props) {
     }
 
     return (
-        <nav>
-            <section className={props.active ? 'w-full lg:inline-flex lg:flex-grow lg:w-auto bg-[#f08583]' : 'hidden lg:flex items-center flex-wrap bg-[#f08583]'}>
-                {div}
-            </section>
-        </nav>
+        <>
+            <nav className='sticky top-0 z-30'>
+                <section className={props.active ? `scale-y-0 lg:scale-y-100 flex flex-row items-start lg:relative w-full absolute opacity-95 bg-[#f08583]` : 'flex flex-row items-start scale-y-0 absolute w-full lg:scale-y-100 lg:relative transition duration-500 ease-in-out origin-top bg-[#f08583]'}>
+                    
+                    {div}
+                    <div className='inline-flex p-2 ml-auto'>
+                        <Image
+                            src='/ktds_main.png'
+                            width={48}
+                            height={20}
+                        />
+                    </div>
+                </section>
+
+                {/* 반응형 서브 네비게이션바 */}
+                <section className={props.active ? `lg:hidden flex flex-col items-start transition duration-500 ease-in-out origin-top w-full absolute opacity-95 bg-[#f08583]` : 'flex flex-col items-start scale-y-0 absolute w-full transition duration-200 ease-in-out origin-top bg-[#f08583]'}>
+                    
+                    {div}
+                    <div className='inline-flex p-2 ml-auto'>
+                        <Image
+                            src='/ktds_main.png'
+                            width={48}
+                            height={20}
+                        />
+                    </div>
+                </section>
+            </nav>
+        </>
     )
 }
