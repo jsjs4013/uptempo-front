@@ -3,10 +3,12 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/Navbar'
 import Layout from '../components/Layout'
+import CategoryChoose from '../components/CategoryChoose'
 import dynamic from 'next/dynamic'
 
 import { Dialog, Transition, RadioGroup } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import classNames from 'classnames';
 
 
 const DynamicDesktop = dynamic( // For no SSR
@@ -23,6 +25,8 @@ export default function Device() {
     let currentPage = 2
     const [isOpen, setIsOpen] = useState(false)
     const [plan, setPlan] = useState('startup')
+    const [selected, setSelected] = useState('startup')
+
 
     function closeModal() {
         setIsOpen(false)
@@ -118,49 +122,7 @@ export default function Device() {
                                                     >
                                                         제조사
                                                     </Dialog.Title>
-                                                    <RadioGroup value={plan} onChange={setPlan}>
-                                                        <RadioGroup.Label>Plan</RadioGroup.Label>
-                                                        <RadioGroup.Option value="startup">
-                                                            {({ active, checked }) => (
-                                                                <>
-                                                                    <span
-                                                                    className={`
-                                                                        ${checked ? 'bg-indigo-600 ' : ''}
-                                                                        ${active ? 'ring-2 ring-indigo-500' : ''}
-                                                                    `}
-                                                                    />
-                                                                    Startup
-                                                                </>
-                                                            )}
-                                                        </RadioGroup.Option>
-                                                        <RadioGroup.Option value="business">
-                                                            {({ active, checked }) => (
-                                                                <>
-                                                                    <span
-                                                                    className={`
-                                                                        ${checked ? 'bg-indigo-600 ' : ''}
-                                                                        ${active ? 'ring-2 ring-indigo-500' : ''}
-                                                                    h-4 w-4 rounded-full`}
-                                                                    />
-                                                                    Startup2
-                                                                </>
-                                                            )}
-                                                        </RadioGroup.Option>
-                                                        <RadioGroup.Option value="enterprise">
-                                                            {({ active, checked }) => (
-                                                                <>
-                                                                    <span
-                                                                    className={`
-                                                                        ${checked ? 'bg-indigo-600 ' : ''}
-                                                                        ${active ? 'ring-2 ring-indigo-500' : ''}
-                                                                    h-4 w-4 rounded-full`}
-                                                                    />
-                                                                    Startup3
-                                                                </>
-                                                            )}
-                                                        </RadioGroup.Option>
-                                                    </RadioGroup>
-
+                                                    <CategoryChoose />
                                                     <div className="mt-4">
                                                         <button
                                                             type="button"
