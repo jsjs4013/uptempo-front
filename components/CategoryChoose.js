@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
-const company = ['ALL', 'APPLE', 'SAMSUNG', 'etc']
+const company = ['ALL', 'APPLE', 'SAMSUNG', 'LG', 'etc']
 // const os_list = ['ALL', 'IOS', 'ANDROID', 'etc']
 
 export default function CategoryChoose(props) {
