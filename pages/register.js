@@ -18,51 +18,47 @@ export default function Register() {
     const handleNewWeekdays = () => {
         let newWeekDays = [];
         let now_day = now.getDay();
-        let start_date = new Date();
-        start_date.setDate(now.getDate() - now_day);
+        let start_date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now_day);
         for(var i = 0; i < 7; i++){
-            var temp = new Date();
-            temp.setDate(start_date.getDate() + i);
+            var temp = new Date(start_date.getFullYear(), start_date.getMonth(), start_date.getDate() + i);
             newWeekDays[i] = temp;
         }
+        console.log(now, newWeekDays)
         return newWeekDays;
     }
+
     const [weekDays, setWeekDays] = useState(handleNewWeekdays);
 
-    const handleIncreaseWeek = () => {
-        console.log("=>");
-        let newDate = new Date(now.getDate() + 7);
-        setNow(newDate);
-        if(typeof now === "string" || typeof now !== Date) setNow(new Date(now))
-        setWeekDays(handleNewWeekdays)   
-    }
-
-    const handleDecreaseWeek = () => {
-        console.log("<=");
-        const promies = new Promise((resolve, reject) => {
-            let newDate = new Date(now.getDate() - 7);
-            setNow(newDate);
-            if(typeof now === "string"|| typeof now !== Date) setNow(new Date(now))
-        });
-        promies.then(
-            setWeekDays(handleNewWeekdays)
+    const handleIncreaseWeek = async () => {
+        let newDate = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() + 7
         );
+        await setNow(newDate);  
     }
 
-    const handleSelectDate = (n) => {
-        const promies = new Promise((resolve, reject) => {
-            setNow(n);
-            console.log(now);
-            if(typeof now === "string"|| typeof now !== Date) setNow(new Date(n))
-        })
-        promies.then(
-            setWeekDays(handleNewWeekdays)
-        )
+    const handleDecreaseWeek = async () => {
+        let newDate = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() - 7
+        );
+        await setNow(newDate);
+    }
+
+    const handleSelectDate = async (n) => {
+        await setNow(n);
     }
 
     useEffect(() => {
-        console.log('register.js is re-Renderring');
-    }, [weekDays]);
+        console.log('first render');
+        if(weekDays === undefined) setWeekDays(handleNewWeekdays);
+    }, []);
+
+    useEffect(() => {
+        setWeekDays(handleNewWeekdays);
+    }, [now])
 
     return(
         <Layout>
@@ -85,7 +81,8 @@ export default function Register() {
                             >
                                 <FontAwesomeIcon icon={faArrowLeft} />
                             </button>
-                            <DatePicker selected={now} onChange={(now) => handleSelectDate(now)}
+                            <DatePicker className='border border-gray-300 mx-4 text-center'
+                                            selected={now} onChange={(n) => handleSelectDate(n)}
                                             peekNextMonth
                                             showMonthDropdown
                                             showYearDropdown
@@ -107,49 +104,49 @@ export default function Register() {
                                 <div>
                                     <button type="button" 
                                         className="hover:bg-red-500 hover:text-white text-red-700 rounded-full p-2"
-                                        onClick={() => { handleSelectDate(weekDays[0]) }}>{weekDays[0].getDate()}
+                                        onClick={() => { handleSelectDate(weekDays[0])}}>{weekDays[0].getDate()}
                                     </button>
                                         <p className='text-xl text-red-700'>일</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-900 hover:text-white rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[1]) }}>{weekDays[1].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[1])}}>{weekDays[1].getDate()}
                                         </button>
                                         <p className='text-xl'>월</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-900 hover:text-white rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[2]) }}>{weekDays[2].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[2])}}>{weekDays[2].getDate()}
                                         </button>
                                         <p className='text-xl'>화</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-900 hover:text-white rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[3]) }}>{weekDays[3].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[3])}}>{weekDays[3].getDate()}
                                         </button>
                                         <p className='text-xl'>수</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-900 hover:text-white rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[4]) }}>{weekDays[4].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[4])}}>{weekDays[4].getDate()}
                                         </button>
                                         <p className='text-xl'>목</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-900 hover:text-white rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[5]) }}>{weekDays[5].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[5])}}>{weekDays[5].getDate()}
                                         </button>
                                         <p className='text-xl'>금</p>
                                     </div>
                                     <div>
                                         <button type="button" 
                                             className="hover:bg-blue-700 hover:text-white text-blue-700 rounded-full p-2"
-                                            onClick={() => { handleSelectDate(weekDays[6]) }}>{weekDays[6].getDate()}
+                                            onClick={() => { handleSelectDate(weekDays[6])}}>{weekDays[6].getDate()}
                                         </button>
                                         <p className="text-blue-700 text-xl">토</p>
                                     </div>
@@ -324,9 +321,7 @@ export default function Register() {
                                     <div className='border-b border-gray-300'><br/></div>
                                     <div className='border-b border-gray-300'><br/></div>
                                 </div>
-                                <div>
-                                    <br/>
-                                </div>
+                                <div></div>
                             </div>
                         </div>
                     </div>
