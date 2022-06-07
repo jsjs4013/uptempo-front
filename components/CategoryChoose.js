@@ -1,21 +1,31 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
-const company = ['ALL', 'APPLE', 'SAMSUNG', 'LG', 'etc']
-// const os_list = ['ALL', 'IOS', 'ANDROID', 'etc']
-
 export default function CategoryChoose(props) {
-  const [selected, setSelected] = useState(company[0])
+  const test_company = ['ALL', 'APPLE', 'SAMSUNG', 'LG', 'etc']
+  const company = [{key:1, category:'ALL'} ,{key:2, category:'APPLE'}, {key:3, category:'SAMSUNG'}, {key:4, category:'LG'}, {key:5, category:'etc'}]
+  const os_list = [{key:1, category:'ALL'}, {key:2, category:'IOS'}, {key:3, category:'ANDROID'}, {key:4, category:'etc'}]
+  
+  // 제조사인지 OS인지 확인할 수 있는 변수 할당
+  const devOrOs = props.isDevOs == 1 ? [...company] : [...os_list]
+
+  const [selected, setSelected] = useState(devOrOs[0])
 
   return (
-    <div className="w-full px-4 py-16">
+    <div className="w-full px-4 py-4">
       <div className="mx-auto w-full max-w-md">
         <RadioGroup value={selected} onChange={setSelected}>
-          <RadioGroup.Label className="sr-only">제조사</RadioGroup.Label>
+          {
+            props.isDevOs == 1 && <RadioGroup.Label className="sr-only">제조사</RadioGroup.Label>
+          }
+          {
+            props.isDevOs == 2 && <RadioGroup.Label className="sr-only">OS</RadioGroup.Label>
+          }
           <div className="space-y-2">
-            {company.map((company) => (
+            {devOrOs.map((devOrOs) => (
               <RadioGroup.Option
-                value={company}
+                key={devOrOs.key}
+                value={devOrOs}
                 className={({ active, checked }) =>
                   `${
                     active
@@ -39,7 +49,7 @@ export default function CategoryChoose(props) {
                               checked ? 'text-white' : 'text-gray-900'
                             }`}
                           >
-                            {company}
+                            {devOrOs.category}
                           </RadioGroup.Label>
                         </div>
                       </div>
