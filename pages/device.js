@@ -11,6 +11,8 @@ import { Dialog, Transition, RadioGroup } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import classNames from 'classnames';
 
+const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
+const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
 
 const DynamicDesktop = dynamic( // For no SSR
   () => import('../components/Device_screen').then((mod) => mod.Desktop),
@@ -24,42 +26,49 @@ const DynamicPhone = dynamic( // For no SSR
 
 export default function Device() {
     let currentPage = 2
-    const [plan, setPlan] = useState('startup')
-    const [selected, setSelected] = useState('startup')
+    const [selected, setSelected] = useState([0, 0])
+
+    function setSelect(selectNum) {
+        setSelected(selectNum)
+    }
     
     return (
         <Layout>
             <Navbar currentPage={currentPage} />
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
+                    <DynamicDesktop>
+                        <div name="nameBar" className='py-2'>
+                            <p className='text-2xl pl-2 pb-4' name='deviceName'>단말 사용 예약</p>
+                            <hr className='border border-black'/>
+                        </div>
+                    </DynamicDesktop>
                     <div className="lg:flex lg:-mx-2">
+                        {console.log('use')}
                         <DynamicDesktop>
                             <div className="space-y-3 tracking-widest mt-2 lg:w-1/5 lg:px-2 lg:space-y-2">
                                 <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
                                     <p className='text-white font-bold mt-2 mb-2'>제조사</p>
                                 </div>
                                 <div className='flex flex-col items-left ml-7'>
-                                    <a href="#" className="block font-bold text-blue-900 hover:underline">ALL</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">APPLE</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">SAMSUNG</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">LG</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">etc</a>
+                                    {company.map((company) => (
+                                        <a href="#" key={company.key} className="block font-medium text-gray-500 hover:underline">{company.category}</a>
+                                    ))}
+                                    {/* <a href="#" className="block font-bold text-blue-900 hover:underline">{company[0].category}</a> */}
                                 </div>
                                 <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
                                     <p className='text-white font-medium mt-2 mb-2'>OS</p>
                                 </div>
                                 <div className='flex flex-col items-left ml-7'>
-                                    <a href="#" className="block font-bold text-blue-900 hover:underline">ALL</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">APPLE</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">ANDROID</a>
-                                    <a href="#" className="block font-medium text-gray-500 hover:underline">IOS</a>
-                                    <a href="#" className="block font-bold text-gray-500 hover:underline">etc</a>
+                                    {os_list.map((os_list) => (
+                                        <a href="#" key={os_list.key} className="block font-medium text-gray-500 hover:underline">{os_list.category}</a>
+                                    ))}
                                 </div>
                             </div>
                         </DynamicDesktop>
 
                         <DynamicPhone>
-                            <CategoryModals />
+                            <CategoryModals selected={selected} setSelect={setSelect} />
                         </DynamicPhone>
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">

@@ -45,12 +45,23 @@ export default function CategoryModals(props) {
                 </div>
             </div>
 
-            <ChooseModal isOpen={isOpen} isDevOs={isDevOs} closeModal={closeModal} />
+            <ChooseModal selected={props.selected} setSelect={props.setSelect} isOpen={isOpen} isDevOs={isDevOs} closeModal={closeModal} />
         </>
     )
 }
 
 function ChooseModal(props) {
+    const [sDev, setSDev] = useState(0)
+    const [sOs, setSOs] = useState(0)
+
+    function setDev(dev) {
+        setSDev(dev)
+    }
+
+    function setOs(os) {
+        setSOs(os)
+    }
+
     return (
         <Transition appear show={props.isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={props.closeModal}>
@@ -78,12 +89,20 @@ function ChooseModal(props) {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                <CategoryChoose isDevOs={props.isDevOs} />
+                                {
+                                    props.isDevOs == 1 && <CategoryChoose isDevOs={props.isDevOs} isSetDevOs={setDev} selected={props.selected[0]} />
+                                }
+                                {
+                                    props.isDevOs == 2 && <CategoryChoose isDevOs={props.isDevOs} isSetDevOs={setOs} selected={props.selected[1]} />
+                                }
                                 <div>
                                     <button
                                         type="button"
                                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={props.closeModal}
+                                        onClick={() => {
+                                            props.closeModal();
+                                            props.setSelect([sDev, sOs]);
+                                        }}
                                         >
                                         선택
                                     </button>

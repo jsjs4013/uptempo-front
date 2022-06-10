@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
+const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
+const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
+
 export default function CategoryChoose(props) {
-  const test_company = ['ALL', 'APPLE', 'SAMSUNG', 'LG', 'etc']
-  const company = [{key:1, category:'ALL'} ,{key:2, category:'APPLE'}, {key:3, category:'SAMSUNG'}, {key:4, category:'LG'}, {key:5, category:'etc'}]
-  const os_list = [{key:1, category:'ALL'}, {key:2, category:'IOS'}, {key:3, category:'ANDROID'}, {key:4, category:'etc'}]
-  
   // 제조사인지 OS인지 확인할 수 있는 변수 할당
   const devOrOs = props.isDevOs == 1 ? [...company] : [...os_list]
 
-  const [selected, setSelected] = useState(devOrOs[0])
+  const [selected, setSelected] = useState(devOrOs[props.selected])
+
+  useEffect(() => { // Radio 버튼이 선택될 때 마다 값을 바꿔주기 위해 사용되는 부분
+    props.isSetDevOs(selected.key)
+  }, [selected])
 
   return (
     <div className="w-full px-4 py-4">
