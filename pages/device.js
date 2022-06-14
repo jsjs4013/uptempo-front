@@ -52,16 +52,21 @@ export default function Device() {
                                 </div>
                                 <div className='flex flex-col items-left ml-7'>
                                     {company.map((company) => (
-                                        <a href="#" key={company.key} className="block font-medium text-gray-500 hover:underline">{company.category}</a>
+                                        company.key === selected[0] ?
+                                            <a href="#" key={company.key} className="block font-bold text-blue-900 hover:underline">{company.category}</a>
+                                        :
+                                            <a href="#" key={company.key} className="block font-medium text-gray-500 hover:underline" onClick={event => setSelected([company.key, selected[1]])}>{company.category}</a>
                                     ))}
-                                    {/* <a href="#" className="block font-bold text-blue-900 hover:underline">{company[0].category}</a> */}
                                 </div>
                                 <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
                                     <p className='text-white font-medium mt-2 mb-2'>OS</p>
                                 </div>
                                 <div className='flex flex-col items-left ml-7'>
                                     {os_list.map((os_list) => (
-                                        <a href="#" key={os_list.key} className="block font-medium text-gray-500 hover:underline">{os_list.category}</a>
+                                        os_list.key === selected[1] ?
+                                            <a href="#" key={os_list.key} className="block font-bold text-blue-900 hover:underline">{os_list.category}</a>
+                                        :
+                                            <a href="#" key={os_list.key} className="block font-medium text-gray-500 hover:underline" onClick={event => setSelected([selected[0], os_list.key])}>{os_list.category}</a>
                                     ))}
                                 </div>
                             </div>
