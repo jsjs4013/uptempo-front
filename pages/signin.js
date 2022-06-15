@@ -6,26 +6,24 @@ import styles from "../styles/Home.module.css";
 export default function SignIn() {
   const [data, setData] = useState({
     email: "",
-    name: "",
+    username: "",
   });
 
-  const option = {
-    // 이름 데이터의 경우 중앙에서 관리할 필요가 있음.
-  };
-
-  const signIn = () => {
-    if (email === "" || name === "") {
+  const signIn = (e) => {
+    e.preventDefault();
+    if (data.email === "" || data.name === "") {
       window.alert("입력이 필요합니다.");
     }
-
-    const url = "http://61.74.18.4/auth/api/v1/mock";
+    
+    const url = "http://61.74.187.4:7100/auth/contact";
+    
     axios
       .post(url, data)
       .then((res) => {
-        console.log("succ");
+        console.log("succ", res);
       })
       .catch((err) => {
-        console.log("err");
+        console.log("err", err);
       })
       .then(() => {
         console.log("--");
@@ -56,8 +54,10 @@ export default function SignIn() {
                 <div className="mb-6">
                   <input
                     type="text"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-900 focus:bg-white focus:border-blue-900 focus:outline-none"
                     placeholder="E-mail"
+                    value={data.email}
+                    onChange={(event) => setData({email: event.target.value, name: data.name})}
                   />
                 </div>
 
@@ -65,8 +65,10 @@ export default function SignIn() {
                 <div className="mb-6">
                   <input
                     type="password"
-                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-900 focus:bg-white focus:border-blue-900 focus:outline-none"
                     placeholder="비밀번호"
+                    value={data.name}
+                    onChange={(event) => setData({email: data.email, name: event.target.value})}
                   />
                 </div>
 
@@ -100,7 +102,7 @@ export default function SignIn() {
 
                 {/**  Submit button */}
                 <button
-                  className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-lg text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+                  className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
                   onClick={signIn}

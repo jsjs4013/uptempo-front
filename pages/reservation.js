@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import axios from 'axios'
 
-export default function Register() {
+export default function Reservation() {
     let currentPage = 7;
     const [data, setData] = useState(dummyData.regData); // 임시 데이터
     const [now, setNow] = useState(new Date());
