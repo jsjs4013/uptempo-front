@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import axios from 'axios'
 
 export default function Reservation() {
-    let currentPage = 7;
+    let currentPage = 4;
     const [data, setData] = useState(dummyData.regData); // 임시 데이터
     const [now, setNow] = useState(new Date());
     const [deviceName, setDeviceName] = useState("Galaxy S22");
@@ -113,7 +113,7 @@ export default function Reservation() {
 
     return(
         <Layout>
-            <Navbar/>
+            <Navbar currentPage={currentPage} />
             <section className="bg-white">
                 <div className='container px-6 py-8 mx-auto'>
                     <div name="nameBar" className='py-2'>
