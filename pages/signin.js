@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 export default function SignIn() {
   const [data, setData] = useState({
     email: "",
-    username: "",
+    name: "",
   });
 
   const signIn = (e) => {
@@ -15,8 +15,10 @@ export default function SignIn() {
       window.alert("입력이 필요합니다.");
     }
     
-    const url = "http://61.74.187.4:7100/auth/contact";
+    const url = "http://61.74.187.4:7100/auth/api/v1/mock";
     
+    // header 필요 => contentType => application/json; charset=utf-8 + xsrf token
+
     axios
       .post(url, data)
       .then((res) => {
