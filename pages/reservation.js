@@ -3,16 +3,20 @@ import Layout from '../components/Layout'
 import styles from '../styles/Home.module.css'
 import dummyData from "../pages/dummy/regDataDummy"
 //import Link from 'next/link'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import axios from 'axios'
+import RevModal from '../components/RevModal'
+import RevTable from '../components/RevTable'
 
 export default function Reservation() {
     let currentPage = 4;
     const [data, setData] = useState(dummyData.regData); // 임시 데이터
     const [now, setNow] = useState(new Date());
     const [deviceName, setDeviceName] = useState("Galaxy S22");
+    const [weekSchedule, setWeekSchedule] = useState();
+    const [weekString, setWeekString] = useState();
 
     const handleNewWeekdays = () => {
         let newWeekDays = [];
@@ -49,44 +53,38 @@ export default function Reservation() {
         await setNow(n);
     }
 
-    const RegTable = () => {
-        <div></div>
-    }
-
     const getNewWeekBorads = async () => {
-        // 새 데이터를 받아 다시 표로 그리는 함수
         //let newData = axios.get('/,,,,,,,');
         let weekString = [];
         for(var i = 0; i < 7; i++){
             weekString[i] = '';
             weekString[i] = weekString[i].concat(weekDays[i].getFullYear()).concat('/');
             weekString[i] = ((weekDays[i].getMonth() + 1 <= 9) ? weekString[i].concat('0').concat(weekDays[i].getMonth()+1).concat('/') : weekString[i].concat(weekDays[i].getMonth()+1).concat('/'));
-            weekString[i] = ((weekDays[i].getDay() <= 9) ? weekString[i].concat('0').concat(weekDays[i].getDay()) : weekString[i].concat(weekDays[i].getDay()));
+            weekString[i] = ((weekDays[i].getDate() <= 9) ? weekString[i].concat('0').concat(weekDays[i].getDate()) : weekString[i].concat(weekDays[i].getDate()));
         }
         
         //실제로는 날짜에 맞는 데이터만 요청하여 적용
         //예약 디비 구축 후 다시 작성 필요.
-        let weekSchedule = [];
-        console.log(weekString);
-        console.log(data);
-        
-        var i = 0;
-        for(var r = 0; r < data.length; r++){
-            if(weekString[i] === data[r].date){
-                while(weekString[i] === data[r].date){
-                    weekSchedule.push(data)
-                    r++;
-                }
-                i++;
-            }
-            if(i >= 7) break;
+        let newWeekSchedule = new Map();
+        for(var i = 0; i < 7; i++){
+            newWeekSchedule.set(weekString[i], []);
         }
 
-        console.log(weekSchedule);
+        var d = 0;
+        for(var i = 0; i < data.length; i++){
+            if(weekString[d] === data[i].date){
+                newWeekSchedule.set(weekString[d], data[i].blockno)
+                d++;
+            }
+        }
+
+        await setWeekString(weekString);
+        await setWeekSchedule(newWeekSchedule);
     }
 
     useEffect(() => {
         if(weekDays === undefined) setWeekDays(handleNewWeekdays);
+        if(weekSchedule === undefined) getNewWeekBorads();
     }, []);
 
     useEffect(() => {
@@ -111,6 +109,97 @@ export default function Reservation() {
         </button>
     );
 
+    const timeInfoArr = [
+        {
+            no : 0,
+            timeInfo : '08:00 ~ 08:30',
+        },
+        {
+            no : 1,
+            timeInfo : '08:30 ~ 09:00',
+        },
+        {
+            no : 2,
+            timeInfo : '09:00 ~ 09:30',
+        },
+        {
+            no : 3,
+            timeInfo : '09:30 ~ 10:00',
+        },
+        {
+            no : 4,
+            timeInfo : '10:00 ~ 10:30',
+        },
+        {
+            no : 5,
+            timeInfo : '10:30 ~ 11:00',
+        },
+        {
+            no : 6,
+            timeInfo : '11:00 ~ 11:30',
+        },
+        {
+            no : 7,
+            timeInfo : '11:30 ~ 12:30',
+        },
+        {
+            no : 8,
+            timeInfo : '12:30 ~ 13:00',
+        },
+        {
+            no : 9,
+            timeInfo : '13:00 ~ 13:30',
+        },
+        {
+            no : 10,
+            timeInfo : '13:30 ~ 14:00',
+        },
+        {
+            no : 11,
+            timeInfo : '14:00 ~ 14:30',
+        },
+        {
+            no : 12,
+            timeInfo : '14:30 ~ 15:00',
+        },
+        {
+            no : 13,
+            timeInfo : '15:00 ~ 15:30',
+        },
+        {
+            no : 14,
+            timeInfo : '15:30 ~ 16:00',
+        },
+        {
+            no : 15,
+            timeInfo : '16:00 ~ 16:30',
+        },
+        {
+            no : 16,
+            timeInfo : '16:30 ~ 17:00',
+        },
+        {
+            no : 17,
+            timeInfo : '17:00 ~ 17:30',
+        },
+        {
+            no : 18,
+            timeInfo : '17:30 ~ 18:00',
+        },
+        {
+            no : 19,
+            timeInfo : '18:00 ~ 18:30',
+        },
+        {
+            no : 20,
+            timeInfo : '18:30 ~ 19:00',
+        },
+        {
+            no : 21,
+            timeInfo : '19:30 ~ 20:00',
+        }
+      ]
+
     return(
         <Layout>
             <Navbar currentPage={currentPage} />
@@ -130,7 +219,7 @@ export default function Reservation() {
                             >
                                 ←
                             </button>
-                            <DatePicker selected={now} 
+                            <DatePicker selected={now}
                                         onChange={(n) => handleSelectDate(n)}
                                         peekNextMonth
                                         showMonthDropdown
@@ -145,7 +234,7 @@ export default function Reservation() {
                                 →
                             </button>
                             </div>
-                            <button className="bg-[#2b3d51] hover:bg-gray-900 text-white font-bold rounded w-32 h-12 max-w-lg min-w-fit" onClick={null}>예약 신청</button>
+                            <RevModal deviceName={deviceName} now={now} timeInfoArr = {timeInfoArr}></RevModal>
                         </div>
                         <hr className='border-t border-gray-300' />
                         <div name='board' className='container place-content-center font-bold'>
@@ -221,167 +310,39 @@ export default function Reservation() {
                                     <div className='row-span-2'>20:00</div>
                                     <div><br/></div>
                                 </div>
-                                <div name = "sun_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "mon_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "tue_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "wed_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "thu_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "fri_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
-                                <div name = "sat_rev" className='grid grid-rows-21'>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div className='border-b border-gray-300'><br/></div>
-                                    <div><br/></div>
-                                </div>
+                                {weekSchedule !== undefined ? (
+                                    <RevTable name="sun_rev" blockArr={weekSchedule.get(weekString[0])}></RevTable>):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="mon_rev" blockArr={weekSchedule.get(weekString[1])}></RevTable>
+                                    ):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="tue_rev" blockArr={weekSchedule.get(weekString[2])}></RevTable>
+                                    ):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="wen_rev" blockArr={weekSchedule.get(weekString[3])}></RevTable>
+                                    ):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="thr_rev" blockArr={weekSchedule.get(weekString[4])}></RevTable>
+                                    ):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="fri_rev" blockArr={weekSchedule.get(weekString[5])}></RevTable>
+                                    ):null
+                                }
+                                {
+                                    weekSchedule !== undefined ? (
+                                        <RevTable name="sat_rev" blockArr={weekSchedule.get(weekString[6])}></RevTable>
+                                    ):null
+                                }
                             </div>
                         </div>
                     </div>
