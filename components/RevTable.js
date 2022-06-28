@@ -2,42 +2,35 @@ import { useEffect, useState } from "react";
 import RevRow from "./RevRow";
 
 export default function RevTable(props) {
-  const [blockArr, setBlockarr] = useState();
+  const [blockArr, setBlockarr] = useState(props.blockArr);
 
-  useEffect(() => {
-    let newarr = new Array(21).fill(false);
+  const getNewArr = () => {
+    let newarr = new Array(23).fill(false);
 
     for (var i = 0; i < props.blockArr.length; i++) {
       newarr[props.blockArr[i]] = true;
     }
     setBlockarr(newarr);
-  }, []);
+  };
+
+  useEffect(() => {
+    if (props.blockArr !== undefined) getNewArr();
+  }, [props.blockArr]);
 
   return (
     <>
       {blockArr !== undefined ? (
-        <div name={props.name} className="grid grid-rows-21">
-          <RevRow block={blockArr[0]}></RevRow>
-          <RevRow block={blockArr[1]}></RevRow>
-          <RevRow block={blockArr[2]}></RevRow>
-          <RevRow block={blockArr[3]}></RevRow>
-          <RevRow block={blockArr[4]}></RevRow>
-          <RevRow block={blockArr[5]}></RevRow>
-          <RevRow block={blockArr[6]}></RevRow>
-          <RevRow block={blockArr[7]}></RevRow>
-          <RevRow block={blockArr[8]}></RevRow>
-          <RevRow block={blockArr[9]}></RevRow>
-          <RevRow block={blockArr[10]}></RevRow>
-          <RevRow block={blockArr[11]}></RevRow>
-          <RevRow block={blockArr[12]}></RevRow>
-          <RevRow block={blockArr[13]}></RevRow>
-          <RevRow block={blockArr[14]}></RevRow>
-          <RevRow block={blockArr[15]}></RevRow>
-          <RevRow block={blockArr[16]}></RevRow>
-          <RevRow block={blockArr[17]}></RevRow>
-          <RevRow block={blockArr[18]}></RevRow>
-          <RevRow block={blockArr[19]}></RevRow>
-          <div>
+        <div name={props.name} className="grid grid-rows-24">
+          <div className="border-b-2 py-1">
+            <br />
+          </div>
+          {blockArr.map((block) => {
+            return(
+              <>
+                <RevRow block={block}></RevRow>
+              </>)
+          })}
+          <div className="py-1">
             <br />
           </div>
         </div>
