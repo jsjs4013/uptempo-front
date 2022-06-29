@@ -33,8 +33,7 @@ export default function Device() {
     }
     
     return (
-        <Layout>
-            <Navbar currentPage={currentPage} />
+        <Layout currentPage={currentPage}>
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
                     <DynamicDesktop>

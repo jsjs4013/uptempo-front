@@ -8,8 +8,7 @@ export default function Control() {
     let currentPage = 1
 
     return (
-        <Layout>
-            <Navbar currentPage={currentPage} />
+        <Layout currentPage={currentPage}>
             <div>
                 Up-tempo sample control page
             </div>
