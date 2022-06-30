@@ -14,7 +14,7 @@ export default function Layout({currentPage, children}) {
             </Head>
             <main>
                 {/* {user && Hi} */}
-                {/* {console.log(user)} */}
+                {console.log('user: ', user)}
                 {currentPage && <Navbar currentPage={currentPage} />}
                 {children}
             </main>
