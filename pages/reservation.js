@@ -17,7 +17,6 @@ export default function Reservation() {
   const [deviceName, setDeviceName] = useState("Galaxy S22");
   const [weekSchedule, setWeekSchedule] = useState();
   const [weekString, setWeekString] = useState();
-  const [weekIndex, setWeekIndex] = useState();
 
   const handleNewWeekdays = () => {
     let newWeekDays = [];
@@ -65,18 +64,6 @@ export default function Reservation() {
   const handleSelectDate = async (n) => {
     await setNow(n);
   };
-
-  const getNewIndex = async () => {
-    for(var i = 0; i < weekDays.length; i++) {
-      if (
-        weekDays[i].getMonth() === now.getMonth() &&
-        weekDays[i].getDate() === now.getDate()
-      ) {
-        await setWeekIndex(i);
-        break;
-      }
-    }
-  }
 
   const getNewWeekBorads = async () => {
     //let newData = axios.get('/,,,,,,,');
@@ -134,7 +121,6 @@ export default function Reservation() {
       }
     }
     if (!flag) setWeekDays(handleNewWeekdays);
-    getNewIndex();
   }, [now]);
 
   useEffect(() => {
@@ -262,7 +248,7 @@ export default function Reservation() {
           </div>
           <div
             name="time_board"
-            className="border border-gray-400 rounded-lg mt-4"
+            className="border-2 border-gray-200 rounded-lg my-4 shadow-2xl"
           >
             <div
               name="board_head"
@@ -300,7 +286,7 @@ export default function Reservation() {
                   now={now}
                   timeInfoArr={timeInfoArr}
                   selectDate={selectDate}
-                  blocks={weekSchedule.get(weekString[weekIndex])}
+                  blocks={weekSchedule.get(weekString[now.getDay()])}
                 ></RevModal>
               ) : null}
             </div>
@@ -318,84 +304,97 @@ export default function Reservation() {
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 text-red-700 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 text-red-700 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[0]);
                       }}
-                    >
-                      {weekDays[0].getDate()}
+                    > {
+                      now.getDay() === 0 ? (<p className="font-bold">{weekDays[0].getDate()}</p>) : <p>{weekDays[0].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl text-red-700">일</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[1]);
                       }}
                     >
-                      {weekDays[1].getDate()}
+                      {
+                      now.getDay() === 1 ? (<p className="font-bold">{weekDays[1].getDate()}</p>) : <p>{weekDays[1].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl">월</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[2]);
                       }}
                     >
-                      {weekDays[2].getDate()}
+                      {
+                      now.getDay() === 2 ? (<p className="font-bold">{weekDays[2].getDate()}</p>) : <p>{weekDays[2].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl">화</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[3]);
                       }}
                     >
-                      {weekDays[3].getDate()}
+                      {
+                      now.getDay() === 3 ? (<p className="font-bold">{weekDays[3].getDate()}</p>) : <p>{weekDays[3].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl">수</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[4]);
                       }}
                     >
-                      {weekDays[4].getDate()}
+                      {
+                      now.getDay() === 4 ? (<p className="font-bold">{weekDays[4].getDate()}</p>) : <p>{weekDays[4].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl">목</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[5]);
                       }}
                     >
-                      {weekDays[5].getDate()}
+                      {
+                      now.getDay() === 5 ? (<p className="font-bold">{weekDays[5].getDate()}</p>) : <p>{weekDays[5].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-xl">금</p>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="hover:underline hover:underline-offset-2 text-blue-700 rounded-full px-2"
+                      className="hover:underline hover:underline-offset-2 text-blue-700 px-2"
                       onClick={() => {
                         handleSelectDate(weekDays[6]);
                       }}
                     >
-                      {weekDays[6].getDate()}
+                      {
+                      now.getDay() === 6 ? (<p className="font-bold">{weekDays[6].getDate()}</p>) : <p>{weekDays[6].getDate()}</p> 
+                    } 
                     </button>
                     <p className="text-blue-700 text-xl">토</p>
                   </div>

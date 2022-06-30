@@ -22,19 +22,19 @@
             "rno" : 3,
             "device" : "galaxy 22",
             "date" : "2022/06/29",
-            "blockno" : [7,8,9,10]
+            "blockno" : [7,8,9,10,22,23]
         },
         {
             "rno" : 4,
             "device" : "galaxy 22",
             "date" : "2022/06/30",
-            "blockno" : [15,16,17]
+            "blockno" : [15,16,17,22,23]
         },
         {
             "rno" : 5,
             "device" : "galaxy 22",
             "date" : "2022/07/01",
-            "blockno" : [1,2,3]
+            "blockno" : [0,1,2,3,22,23]
         },
         {
             "rno" : 6,

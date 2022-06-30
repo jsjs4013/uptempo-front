@@ -5,7 +5,7 @@ export default function RevTable(props) {
   const [blockArr, setBlockarr] = useState(props.blockArr);
 
   const getNewArr = () => {
-    let newarr = new Array(23).fill(false);
+    let newarr = new Array(24).fill(false);
 
     for (var i = 0; i < props.blockArr.length; i++) {
       newarr[props.blockArr[i]] = true;
@@ -21,7 +21,7 @@ export default function RevTable(props) {
     <>
       {blockArr !== undefined ? (
         <div name={props.name} className="grid grid-rows-24">
-          <div className="border-b-2 py-1">
+          <div className="border-b-2 border-gray-300 py-1">
             <br />
           </div>
           {blockArr.map((block) => {

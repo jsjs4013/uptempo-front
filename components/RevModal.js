@@ -82,7 +82,7 @@ export default function RevModal(props) {
             id="RevModal"
             className="fixed top-0 left-0 bottom-0 right-0 w-full h-full outline-none overflow-x=hidden overflow-y-auto grid"
           >
-            <section className="place-self-center rounded-md bg-white overflow-hidden mx-0 px-8 py-5 border border-slate-700 shadow-lg">
+            <section className="place-self-center rounded-md bg-white overflow-hidden mx-0 px-8 py-5 border border-slate-700 shadow-xl">
               <header className="realative text-bolder flex justify-between text-2xl font-bold pt-1 pb-4">
                 <div>
                   <span className="font-bold pr-2">{deviceName}</span>

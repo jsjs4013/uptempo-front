@@ -12,7 +12,7 @@ export default function Navbar(props) {
         {id:2, content:'Device', imageIcon:DevicelIcon, route:'/device'},
         {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/setting'},
         {id:4, content:'Reservation', imageIcon:DevicelIcon, route:'/reservation'},
-        {id:5, content:'게시판', imageIcon:ControlIcon, route:'/nb'}
+        {id:5, content:'TEST', imageIcon:ControlIcon, route:'/nb'}
     ]
     const changeClick = () => {
         props.changeState();

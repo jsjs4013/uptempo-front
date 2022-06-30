@@ -1,47 +1,121 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import Navbar from "../components/SubNavbar";
-import NBList from "../components/nblist";
+import Navbar from "../components/Navbar";
+import NBList from "../components/NBList";
+import NBEdit from "../components/NBEdit";
+import NBArticle from "../components/NBArticle";
+import { list } from "postcss";
 
-export default function NB () {
+export default function NB() {
   let currentPage = 5;
-    const modes = ["list", "read", "edit"];
-    const [mode, setMode] = useState(modes[0]);
-    const [article, setArticle] = useState();
+  const [mode, setMode] = useState(0);
+  const [article, setArticle] = useState();
+  const [pageNum, setPageNum] = useState(1);
+  const [articleList, setArticleList] = useState([]);
+  const [ano, setAno] = useState();
 
-    const selectArticle = () => {
-        axios.get(`http://localhost:8080/nb/arti/${ano}`).then((res) => {
-          let article = res.data;  
-          setArticle(article);
-        }).catch((err) => console.log(err));
+  const getList = () => {
+    let list = [];
+    axios
+      .get("http://localhost:8080/nb?pageNumber=1&pageSize=10")
+      .then((res) => {
+        if (res.status === 200) {
+          setArticleList(res.data);
+        } else {
+          alert("아직 작성된 글이 없습니다.");
+        }
+        return [];
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("데이터를 받아오는데 실패하였습니다.");
+        return [];
+      });
+  };
 
-        setMode(modes[1]);
+  useEffect(() => {
+    if (mode === 0) {
+      getList();
     }
+  }, []);
 
-    const clickEditButton = () => {
-        setMode(modes[2]);
-    }
+  const selectArticle = (ano) => {
+    axios
+      .get(`http://localhost:8080/nb/arti/${ano}`)
+      .then((res) => {
+        if (res.status === 200) {
+          setArticle(res.data);
+          //setMode(1)
+        } else {
+          alert("글을 불러오는데 실패하였습니다.");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
-    return(
-        <Layout>
-        <Navbar currentPage={currentPage} />
-        <section className="bg-white">
-          <div className="container px-6 py-8 mx-auto">
-            <div name="nameBar" className="py-2">
-              <p className="text-2xl pl-2 pb-4">게시판</p>
-              <hr className="border border-black" />
-            </div>
+  const registerArticle = async (contents) => {
+    console.log('reg func called')
+    axios
+      .post("http://localhost:8080/nb", {
+        content: contents.content,
+        password: contents.password,
+        subject: contents.subject,
+        type: contents.type,
+        writer: contents.writer,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          alert("게시글이 등록되었습니다.");
+        }
+        else alert("게시글 등록을 실패하였습니다.");
+      })
+      .catch((err) => {
+        console.log(err)
+        alert("에러 발생");
+        return;
+      })
+      .then(() => {
+        setMode(0);
+        return;
+      });
+  };
+
+  return (
+    <Layout>
+      <Navbar currentPage={currentPage} />
+      <section className="bg-white">
+        <div className="container px-6 py-8 mx-auto">
+          <div name="nameBar" className="py-2">
+            <p className="text-2xl pl-2 pb-4">게시판</p>
+            <hr className="border border-black" />
+          </div>
+
+          {mode === 0 ? (
+            <NBList
+              articleList={articleList}
+              selectArticle={selectArticle}
+              clickEditButton={() => {
+                setMode(2);
+              }}
+            ></NBList>
+          ) : mode === 1 ? (
             <div>
-              <button className="bg-[#2b3d51] hover:bg-slate-900 text-white font-bold rounded w-32 h-12 max-w-lg min-w-fit ease-in-out focus:shadow-lg active:bg-slate-700 active:shadow-lg transition">글 작성</button>
+              <NBArticle article></NBArticle>
             </div>
-            {(mode === modes[0]) ? (
-                {/**<NBList selectArticle={selectArticle} clickEditButton={clickEditButton}></NBList>*/}
-            ): (mode === modes[1]) ? (<div>
-
-            </div>) : (<div></div>)}
-                </div>
-            </section>
-        </Layout>
-    )
+          ) : (
+            <div>
+              <NBEdit
+                clickListButton={() => {
+                  setMode(0);
+                }}
+                registerArticle={
+                  registerArticle}
+              ></NBEdit>
+            </div>
+          )}
+        </div>
+      </section>
+    </Layout>
+  );
 }
