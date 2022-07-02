@@ -44,7 +44,6 @@ export default function Device() {
                         </div>
                     </DynamicDesktop>
                     <div className="lg:flex lg:-mx-2">
-                        {console.log('use')}
                         <DynamicDesktop>
                             <div className="space-y-3 tracking-widest mt-2 lg:w-1/5 lg:px-2 lg:space-y-2">
                                 <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
