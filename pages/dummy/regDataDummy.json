@@ -1,179 +1,106 @@
 {
     "regData": [
         {
-            "sid" : 0,
+            "rno" : 0,
             "device" : "galaxy 22",
-            "date" : "2022/04/13",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/06/26",
+            "blockno" : []
         },
         {
-            "sid" : 1,
+            "rno" : 1,
             "device" : "galaxy 22",
-            "date" : "2022/04/14",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/06/27",
+            "blockno" : [3,5,6]
         },
         {
-            "sid" : 2,
+            "rno" : 2,
             "device" : "galaxy 22",
-            "date" : "2022/04/15",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/06/28",
+            "blockno" : [4,9,10,11]
         },
         {
-            "sid" : 3,
+            "rno" : 3,
             "device" : "galaxy 22",
-            "date" : "2022/04/16",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/06/29",
+            "blockno" : [7,8,9,10,22,23]
         },
         {
-            "sid" : 4,
+            "rno" : 4,
             "device" : "galaxy 22",
-            "date" : "2022/04/20",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/06/30",
+            "blockno" : [15,16,17,22,23]
         },
         {
-            "sid" : 5,
+            "rno" : 5,
             "device" : "galaxy 22",
-            "date" : "2022/04/23",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/01",
+            "blockno" : [0,1,2,3,22,23]
         },
         {
-            "sid" : 6,
+            "rno" : 6,
             "device" : "galaxy 22",
-            "date" : "2022/04/27",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/02",
+            "blockno" : [8,9,10]
         },
         {
-            "sid" : 7,
+            "rno" : 7,
             "device" : "galaxy 22",
-            "date" : "2022/04/29",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/03",
+            "blockno" : [4,9,10,11]
         },
         {
-            "sid" : 8,
+            "rno" : 8,
             "device" : "galaxy 22",
-            "date" : "2022/05/01",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/04",
+            "blockno" : [12,13,14,15,18,19]
         },
         {
-            "sid" : 9,
+            "rno" : 9,
             "device" : "galaxy 22",
-            "date" : "2022/05/04",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/05",
+            "blockno" : [15,16,18,19]
         },
         {
-            "sid" : 10,
+            "rno" : 10,
             "device" : "galaxy 22",
-            "date" : "2022/05/07",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/06",
+            "blockno" : [3,4,5,6,7,18,19,20]
         },
         {
-            "sid" : 11,
+            "rno" : 11,
             "device" : "galaxy 22",
-            "date" : "2022/05/10",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/07",
+            "blockno" : []
         },
         {
-            "sid" : 12,
+            "rno" : 12,
             "device" : "galaxy 22",
-            "date" : "2022/05/13",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/08",
+            "blockno" : [7,8,9,10,18,19]
         },
         {
-            "sid" : 13,
+            "rno" : 13,
             "device" : "galaxy 22",
-            "date" : "2022/05/16",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/09",
+            "blockno" : [1,2,3,7,8,9]
         },
         {
-            "sid" : 14,
+            "rno" : 14,
             "device" : "galaxy 22",
-            "date" : "2022/05/18",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/10",
+            "blockno" : [2,3,15,16,17]
         },
         {
-            "sid" : 15,
+            "rno" : 15,
             "device" : "galaxy 22",
-            "date" : "2022/05/20",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/11",
+            "blockno" : [5,6,7,10,11,13]
         },
         {
-            "sid" : 16,
+            "rno" : 16,
             "device" : "galaxy 22",
-            "date" : "2022/05/23",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 17,
-            "device" : "galaxy 22",
-            "date" : "2022/05/25",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 18,
-            "device" : "galaxy 22",
-            "date" : "2022/05/27",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 19,
-            "device" : "galaxy 22",
-            "date" : "2022/05/29",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 20,
-            "device" : "galaxy 22",
-            "date" : "2022/06/03",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 21,
-            "device" : "galaxy 22",
-            "date" : "2022/06/06",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 22,
-            "device" : "galaxy 22",
-            "date" : "2022/06/09",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 23,
-            "device" : "galaxy 22",
-            "date" : "2022/06/10",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
-        },
-        {
-            "sid" : 24,
-            "device" : "galaxy 22",
-            "date" : "2022/06/13",
-            "start_time" : "16:00",
-            "end_time" : " 17:00"
+            "date" : "2022/07/13",
+            "blockno" : [0,1,2,3,4,5,6,7,9,10]
         }
     ]
 }
