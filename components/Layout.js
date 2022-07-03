@@ -1,6 +1,10 @@
 import Head from 'next/head'
+import Navbar from './Navbar'
+import useUser from '/lib/useUser'
 
-export default function Layout({children}) {
+export default function Layout({currentPage, children}) {
+    const {user, mutateUser} = useUser()
+
     return (
         <div>
             <Head>
@@ -8,7 +12,10 @@ export default function Layout({children}) {
                 <meta name="description" content="Up-tempo device farm" />
                 <link rel="icon" href="/uptempo.png" />
             </Head>
-            <main> 
+            <main>
+                {/* {user && Hi} */}
+                {console.log('user: ', user)}
+                {currentPage && <Navbar currentPage={currentPage} />}
                 {children}
             </main>
         </div>
