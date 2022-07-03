@@ -28,15 +28,18 @@ export default function NBList(props) {
                   return (
                     <>
                       <tr
+                        id={item.ano}
                         className="bg-white border-b border-gray-70 hover:shadow-lg hover:bg-gray-100 transition ease-in-out duration-150"
-                        onClick={(item) => props.selectArticle(item.ano)}
                       >
                         <td className="px-4 py-4 text-lg font-bold text-red-600 text-2xl">
                           {item.type}
                         </td>
                         <td
                           className="px-4 py-4 text-lg font-bold cursor-pointer"
-                          onClick={() => props.selectArticle(item.ano)}
+                          onClick={ async () => {
+                            await props.selectAno(item.ano);
+                            await props.clickArticle();
+                          }}
                         >
                           {item.subject}
                         </td>
@@ -63,16 +66,6 @@ export default function NBList(props) {
             <li>
               <button className="w-10 h-10 text-gray-600 transition-colors duration-150 rounded-full hover:bg-red-100">
                 1
-              </button>
-            </li>
-            <li>
-              <button className="w-10 h-10 text-gray-600 transition-colors duration-150 rounded-full hover:bg-red-100">
-                2
-              </button>
-            </li>
-            <li>
-              <button className="w-10 h-10 text-gray-600 transition-colors duration-150 rounded-full hover:bg-red-100">
-                3
               </button>
             </li>
             <li>

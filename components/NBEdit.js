@@ -14,7 +14,7 @@ export default function NBEdit(props) {
   };
 
   const beforeSubmit = async () => {
-    //ui적으로 바꿀 수도 있음.
+    //ui에서 동작하도록 바꿔야...
     if (!isVaildate(subject)) {
       alert("글 제목을 입력해 주세요!");
       return false;
@@ -57,15 +57,13 @@ export default function NBEdit(props) {
 
   return (
     <div className="grid w-full shadow-2xl p-8 rounded-lg">
-      <div className="flex">
-        <div className="font-bold px-2 text-xl">글 작성하기</div>
         <button
-          className="px-2 py-1 border-2 font-medium rounded-md shadow-sm hover:bg-gray-500 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out ml-1"
+          className="w-24 h-10 shadow-lg px-2 py-1 border-2 font-medium rounded-md shadow-sm hover:bg-gray-500 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out ml-1"
           onClick={props.clickListButton}
         >
           목록으로
         </button>
-      </div>
+        <div className="pt-4 font-bold px-2 text-xl">글 작성하기</div>
       <div className="border-t-2 border-b-2 my-2 py-2 border-gray-200">
         <div className="grid grid-cols-10 gap-4 py-2">
           <input
@@ -121,12 +119,12 @@ export default function NBEdit(props) {
         >
           등록
         </button>
-        <button
+        {/* <button
           className="px-6 py-2.5 border-2 font-medium rounded-md shadow-md hover:bg-red-500 hover:text-white hover:shadow-lg focus:bg-red-600 focus:shadow-lg active:bg-red-600 active:shadow-lg transition duration-150 ease-in-out ml-1"
           onClick={cleanAll}
         >
           초기화
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { list } from "postcss";
 export default function NB() {
   let currentPage = 5;
   const [mode, setMode] = useState(0);
-  const [article, setArticle] = useState();
+  const [article, setArticle] = useState({});
   const [pageNum, setPageNum] = useState(1);
   const [articleList, setArticleList] = useState([]);
   const [ano, setAno] = useState();
@@ -18,7 +18,7 @@ export default function NB() {
   const getList = () => {
     let list = [];
     axios
-      .get("http://localhost:8080/nb?pageNumber=1&pageSize=10")
+      .get(`http://localhost:8080/nb?pageNumber=${pageNum}&pageSize=10`)
       .then((res) => {
         if (res.status === 200) {
           setArticleList(res.data);
@@ -34,13 +34,7 @@ export default function NB() {
       });
   };
 
-  useEffect(() => {
-    if (mode === 0) {
-      getList();
-    }
-  }, []);
-
-  const selectArticle = (ano) => {
+  const getArticle = async () => {
     axios
       .get(`http://localhost:8080/nb/arti/${ano}`)
       .then((res) => {
@@ -52,10 +46,10 @@ export default function NB() {
         }
       })
       .catch((err) => console.log(err));
-  };
+  }
 
   const registerArticle = async (contents) => {
-    console.log('reg func called')
+    console.log("reg func called");
     axios
       .post("http://localhost:8080/nb", {
         content: contents.content,
@@ -67,11 +61,10 @@ export default function NB() {
       .then((res) => {
         if (res.status === 200) {
           alert("게시글이 등록되었습니다.");
-        }
-        else alert("게시글 등록을 실패하였습니다.");
+        } else alert("게시글 등록을 실패하였습니다.");
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         alert("에러 발생");
         return;
       })
@@ -80,6 +73,24 @@ export default function NB() {
         return;
       });
   };
+
+  useEffect(() => {
+    // if (mode === 1 || mode === 2) {
+    //   setMode(0);
+    // }
+  }, []);
+
+  useEffect(() => {
+    if (ano !== undefined) {
+      getArticle();
+    }
+  }, [ano]);
+
+  useEffect(() => {
+    if (mode === 0) {
+      getList();
+    }
+  }, [mode]);
 
   return (
     <Layout>
@@ -94,14 +105,25 @@ export default function NB() {
           {mode === 0 ? (
             <NBList
               articleList={articleList}
-              selectArticle={selectArticle}
               clickEditButton={() => {
                 setMode(2);
+              }}
+              selectAno={(n) => {
+                setAno(n);
+              }}
+              clickArticle={() => {
+                setMode(1);
               }}
             ></NBList>
           ) : mode === 1 ? (
             <div>
-              <NBArticle article></NBArticle>
+              <NBArticle
+                clickListButton={() => {
+                  setMode(0);
+                }}
+                ano={ano}
+                article={article}
+              ></NBArticle>
             </div>
           ) : (
             <div>
@@ -109,8 +131,7 @@ export default function NB() {
                 clickListButton={() => {
                   setMode(0);
                 }}
-                registerArticle={
-                  registerArticle}
+                registerArticle={registerArticle}
               ></NBEdit>
             </div>
           )}
