@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import useUser from '/lib/useUser'
 
 export default function Layout({currentPage, children}) {
-    const {user, mutateUser} = useUser()
+    const {user, mutateUser} = useUser();
 
     return (
         <div>
@@ -13,8 +13,6 @@ export default function Layout({currentPage, children}) {
                 <link rel="icon" href="/uptempo.png" />
             </Head>
             <main>
-                {/* {user && Hi} */}
-                {console.log('user: ', user)}
                 {currentPage && <Navbar currentPage={currentPage} />}
                 {children}
             </main>
