@@ -10,26 +10,20 @@ async function getxsrftoken(req, res) {
   const { Authorization } = await req.body;
 
   const swrHeader = {
-    method: "GET",
+    method: "POST",
     headers: {
       'Content-type': 'application/json',
-      'Authorization' : 'Bearer 985a2341152b46a09eb2c6afa709dd1748956a2c7afc4478b0dfc19fe502b14e'
-    }
+    },
+    body: JSON.stringify({
+      "name":"a",
+      "email":"a@a.com"
+    })
   };
-
-  // const swrHeader = {
-  //   method: "POST",
-  //   headers: {
-  //     'Content-type': 'application/json',
-  //   },
-  //   body: JSON.stringify({name:"a", email:"a@s.com"})
-  // };
   
   try {
-    // const xsrftoken = await fetch('http://61.74.187.4:7100/api/v1/devices', swrHeader);
-    const xsrftoken = await axios.get('http://61.74.187.4:7100/api/v1/devices', swrHeader);
+    const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
     
-    const xsrftokenJSON = xsrftoken.data;
+    const xsrftokenJSON = await xsrftoken.json();
     req.session.xsrf = xsrftokenJSON;
     await req.session.save();
     res.json(xsrftokenJSON);
