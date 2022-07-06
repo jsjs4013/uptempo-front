@@ -1,38 +1,16 @@
-import axios from "axios";
 import { useState } from "react";
 import Layout from "../components/Layout";
 import useUser from "../lib/useUser";
-import styles from "../styles/Home.module.css";
 
 export default function SignIn() {
-  const {mutateUser} = useUser('/profile-sg')
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
   const [data, setData] = useState({
     email: "",
     name: "",
   });
-
-  const signIn = (e) => {
-    e.preventDefault();
-    if (data.email === "" || data.name === "") {
-      window.alert("입력이 필요합니다.");
-    }
-    
-    const url = "http://61.74.187.4:7100/auth/api/v1/mock";
-    
-    // header 필요 => contentType => application/json; charset=utf-8 + xsrf token
-
-    axios
-      .post(url, data)
-      .then((res) => {
-        console.log("succ", res);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      })
-      .then(() => {
-        console.log("--");
-      });
-  };
 
   return (
     <Layout>
@@ -43,7 +21,7 @@ export default function SignIn() {
             <div className="grid place-items-center md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
               <img
                 src="KTDS_Logo.svg.png"
-            n    className="w-1/5"
+                className="w-1/5"
                 alt="Phone image"
               />
               <img
@@ -82,13 +60,13 @@ export default function SignIn() {
                       href="#!"
                       className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                     >
-                      회원 가입
+                      회원 가입(만드는 중)
                     </a>
                     <a
                       href="#!"
                       className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out px-3"
                     >
-                      비밀번호 찾기
+                      비밀번호 찾기(만드는 중)
                     </a>
                   </div>
                   <div className="form-group form-check">
@@ -108,7 +86,7 @@ export default function SignIn() {
                   className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
                   data-mdb-ripple="true"
                   data-mdb-ripple-color="light"
-                  onClick={signIn}
+                  onClick={console.log('signin')}
                 >
                   로그인
                 </button>

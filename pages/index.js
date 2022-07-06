@@ -14,10 +14,6 @@ export default function Home() {
       <Layout>
         <Navbar />
         <div>
-          {/* {user && Hi} */}
-          {/* {user.success} */}
-          {JSON.stringify(user)} <br></br>
-          { 'user: ' + user?.success} <br></br>
           Up-tempo main page
         </div>
       </Layout>
