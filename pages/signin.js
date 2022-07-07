@@ -8,7 +8,7 @@ export default function SignIn() {
     redirectTo: "/device",
     redirectIfFound: false,
   });
-  const {emailCheck, setEmailCheck} = useState(false);
+  const {emailCheck, setEmailCheck} = useState(true);
 
   return (
     <Layout>
@@ -125,14 +125,6 @@ export default function SignIn() {
                     email 확인
                   </button>)
                 }
-                <button
-                  className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
-                  data-mdb-ripple="true"
-                  data-mdb-ripple-color="light"
-                  type="submit"
-                >
-                  로그인
-                </button>
               </form>
             </div>
           </div>
