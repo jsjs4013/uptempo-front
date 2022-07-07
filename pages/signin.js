@@ -1,16 +1,14 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
+import fetchJson from "../lib/fetchJson";
 import useUser from "../lib/useUser";
 
 export default function SignIn() {
   const { mutateUser } = useUser({
-    redirectTo: "/",
-    redirectIfFound: true,
+    redirectTo: "/device",
+    redirectIfFound: false,
   });
-  const [data, setData] = useState({
-    email: "",
-    name: "",
-  });
+  const {emailCheck, setEmailCheck} = useState(false);
 
   return (
     <Layout>
@@ -31,15 +29,41 @@ export default function SignIn() {
               />
             </div>
             <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
-              <form>
+              <form onSubmit={async (event) => {
+                event.preventDefault();
+
+                const body = {
+                  name: event.target.name.value,
+                  email: event.target.email.value,
+                }
+
+                try {
+                  mutateUser(
+                    await fetchJson('api/getxsrftoken', {
+                      method: "POST",
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(body),
+                    })
+                  )
+                } catch (error) {
+                    console.log('login error')
+                    console.log(error.message);
+                }
+              }}>
                 {/** Email input */}
                 <div className="mb-6">
                   <input
-                    type="text"
+                    type="email"
+                    name="email"
+                    onBlur={(event) => {
+                      var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+                      // 형식에 맞는 경우 true 리턴
+                      setEmailCheck(regExp.test(event.target.value));
+                    }}
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-900 focus:bg-white focus:border-blue-900 focus:outline-none"
                     placeholder="E-mail"
-                    value={data.email}
-                    onChange={(event) => setData({email: event.target.value, name: data.name})}
                   />
                 </div>
 
@@ -47,10 +71,9 @@ export default function SignIn() {
                 <div className="mb-6">
                   <input
                     type="password"
+                    name="name"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-900 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-900 focus:bg-white focus:border-blue-900 focus:outline-none"
                     placeholder="비밀번호"
-                    value={data.name}
-                    onChange={(event) => setData({email: data.email, name: event.target.value})}
                   />
                 </div>
 
@@ -82,6 +105,26 @@ export default function SignIn() {
                 </div>
 
                 {/**  Submit button */}
+                {
+                  emailCheck ?
+                      (<button
+                      className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light"
+                      type="submit"
+                    >
+                      로그인
+                    </button>)
+                  :
+                    (<button
+                    className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
+                    data-mdb-ripple="true"
+                    data-mdb-ripple-color="light"
+                    type="submit"
+                  >
+                    email 확인
+                  </button>)
+                }
                 <button
                   className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg focus:bg-white focus:shadow-lg focus:outline-none focus:ring-0 focus:text-[#2b3d51] active:bg-white active:shadow-lg transition duration-150 ease-in-out w-full"
                   data-mdb-ripple="true"
