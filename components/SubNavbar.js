@@ -13,9 +13,6 @@ export default function Navbar(props) {
         {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/setting'},
         {id:4, content:'Reservation', imageIcon:DevicelIcon, route:'/reservation'}
     ]
-    const changeClick = () => {
-        props.changeState();
-    };
 
     const div = []
 

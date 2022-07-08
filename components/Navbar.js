@@ -2,12 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 import SubNavbar from './SubNavbar'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Logo from "../public/uptempo-log-wh.png"
-import ControlIcon from "../public/icons8-touchscreen-30.png"
-import DevicelIcon from "../public/icons8-smartphones-30.png"
-import { passThroughSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
 
 export default function Navbar(props) {
     const [active, setActive] = useState(false);
@@ -96,7 +93,7 @@ export default function Navbar(props) {
 
                 </button>
             </nav>
-            <SubNavbar currentPage={props.currentPage} active={active} changeState={handleClick}/>
+            <SubNavbar currentPage={props.currentPage} active={active}/>
             {
                 active && <button className='fixed cursor-auto top-0 w-full h-full backdrop-blur-sm bg-[#2b3d51]/50 z-10'
                                 onClick={() => {

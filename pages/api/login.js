@@ -1,9 +1,9 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '/lib/session'
 
-export default withIronSessionApiRoute(getxsrftoken, sessionOptions)
+export default withIronSessionApiRoute(login, sessionOptions)
 
-async function getxsrftoken(req, res) {
+async function login(req, res) {
   const { name, email } = await req.body;
 
   const swrHeader = {
@@ -20,8 +20,12 @@ async function getxsrftoken(req, res) {
   try {
     const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
     const xsrftokenJSON = await xsrftoken.json();
-    req.session.xsrf = xsrftokenJSON;
-    console.log('asdas');
+    const xsrftokenBody = {
+      success: xsrftokenJSON.success,
+      jwt: xsrftokenJSON.redirect.substring(xsrftokenJSON.redirect.indexOf('jwt=') + 4),
+      isLoggedIn: true
+    }
+    req.session.xsrf = xsrftokenBody;
     await req.session.save();
 
     // Try redrict to regist jwt token
@@ -33,9 +37,8 @@ async function getxsrftoken(req, res) {
     }
     //////////////////////////////////
 
-    res.json(xsrftokenJSON);
+    res.json(xsrftokenBody);
   } catch (error) {
-    console.log('as')
     res.status(500).json({ message: (error).message })
   }
 }
