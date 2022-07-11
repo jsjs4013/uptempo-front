@@ -90,7 +90,7 @@ export default function Form(props) {
 
                     {/* Submit button */}
                     <button
-                    className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg transition duration-150 ease-in-out w-full focus:bg-gray-300"
+                    className="inline-block px-7 py-3 bg-[#2b3d51] font-bold text-xl text-white leading-snug rounded shadow-md hover:bg-white hover:text-[#2b3d51] hover:shadow-lg transition duration-150 ease-in-out w-full outline-none focus:bg-white focus:text-[#2b3d51] focus:shadow-lg"
                     data-mdb-ripple="true"
                     data-mdb-ripple-color="light"
                     type="submit"

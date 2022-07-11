@@ -7,7 +7,7 @@ import useUser from "../lib/useUser";
 export default function Signin() {
   const { mutateUser } = useUser({
     redirectTo: "/device",
-    redirectIfFound: false,
+    redirectIfFound: true,
   });
 
   return (

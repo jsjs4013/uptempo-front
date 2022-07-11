@@ -1,12 +1,14 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 
-import SubNavbar from './SubNavbar'
+import SubNavbar from './SubNavbar';
 import { useState } from 'react';
 
-import Logo from "../public/uptempo-log-wh.png"
+import Logo from "../public/uptempo-log-wh.png";
+import useUser from "../lib/useUser";
 
 export default function Navbar(props) {
+    const { user } = useUser();
     const [active, setActive] = useState(false);
     const [imgsvg, setImgsvg] = useState(
         <svg
@@ -59,8 +61,8 @@ export default function Navbar(props) {
                     onAnimationEnd={() => {
                         setEffect(false);
                     }}
-                    width={25}
-                    height={25}
+                    width={24}
+                    height={24}
                 />
             )
         }
@@ -80,7 +82,20 @@ export default function Navbar(props) {
                         </a>
                     </Link>
                 </div>
-                <button className={`inline-flex p-3 rounded lg:hidden text-white ml-auto outline-none ${effect && 'animate-wiggle'}`}
+                <Link href='/signin'>
+                    {user?.isLoggedIn ? (
+                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'>
+                            Sign Out
+                        </a>
+                    )
+                        :
+                    (
+                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'>
+                            Sign In
+                        </a>
+                    )}
+                </Link>
+                <button className={`inline-flex p-3 rounded lg:hidden text-white outline-none ${effect && 'animate-wiggle'}`}
                     onClick={() => {
                         handleClick();
                         setEffect(true);
