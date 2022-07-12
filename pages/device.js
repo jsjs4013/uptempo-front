@@ -7,6 +7,8 @@ import Router from 'next/router';
 import { useState } from 'react'
 import useUser from '../lib/useUser';
 import useDevices from '../lib/useDevices';
+import device from './api/device';
+import Link from 'next/link';
 
 const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
 const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
@@ -34,9 +36,11 @@ export default function Device() {
         setSelected(selectNum)
     }
 
+    console.log(devices?.devices[0].model);
+
     return (
         <Layout currentPage={currentPage}>
-            {/* {}
+            {}
             {console.log('sadasdsassa: ' + user?.isLoggedIn)}
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
@@ -92,102 +96,35 @@ export default function Device() {
                                     </select>
                                 </div>
                             </div>
-
+                            
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-a73-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy A73 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
+                                {
+                                    devices?.devices.filter((device) => !device.using).map((device) => (
+                                        <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                            <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                                <Image
+                                                    src='/Galaxy/samsung-galaxy-a73-5g.jpeg'
+                                                    className='object-cover w-full rounded-md h-72 xl:h-80'
+                                                    height={200}
+                                                    width={150}
+                                                    alt='Galaxy'
+                                                />
+                                            </div>
+                                            <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
+                                            <p className="text-blue-900">{device.manufacturer}</p>
 
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-m53-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy M53 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-s20-fe-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy S20 FE 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/iphone/apple-iphone-13-pro.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='iPhone'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
-                                    <p className="text-blue-900">APPLE</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-                                
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/iphone/apple-iphone-13-pro.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='iPhone'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
-                                    <p className="text-blue-900">APPLE</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
+                                            <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                                <Link href="/[id]" as={`/${device.serial}`} >
+                                                    <a className="mx-1">사용하기</a>
+                                                </Link >
+                                            </button>
+                                        </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-            </section> */}
+            </section>
         </Layout>
   )
 }
