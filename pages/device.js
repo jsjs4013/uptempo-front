@@ -1,15 +1,12 @@
-import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Navbar from '../components/Navbar'
 import Layout from '../components/Layout'
-import CategoryChoose from '../components/CategoryChoose'
 import CategoryModals from '../components/CategoryModals'
 import dynamic from 'next/dynamic'
+import Router from 'next/router';
 
-import { Dialog, Transition, RadioGroup } from '@headlessui/react'
-import { Fragment, useState } from 'react'
-import classNames from 'classnames';
+import { useState } from 'react'
+import useUser from '../lib/useUser';
+import useDevices from '../lib/useDevices';
 
 const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
 const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
@@ -26,14 +23,21 @@ const DynamicPhone = dynamic( // For no SSR
 
 export default function Device() {
     let currentPage = 2
-    const [selected, setSelected] = useState([0, 0])
+    const { user } = useUser({
+        redirectTo: "/",
+        redirectIfFound: false,
+    });
+    const { devices } = useDevices(user);
+    const [selected, setSelected] = useState([0, 0]);
 
     function setSelect(selectNum) {
         setSelected(selectNum)
     }
-    
+
     return (
         <Layout currentPage={currentPage}>
+            {/* {}
+            {console.log('sadasdsassa: ' + user?.isLoggedIn)}
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
                     <DynamicDesktop>
@@ -183,7 +187,7 @@ export default function Device() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </Layout>
   )
 }

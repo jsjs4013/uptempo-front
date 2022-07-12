@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Navbar from './Navbar'
-import useUser from '/lib/useUser'
 
 export default function Layout({currentPage, children}) {
     return (

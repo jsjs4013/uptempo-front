@@ -8,8 +8,6 @@ import useUser from "/lib/useUser";
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const { user } = useUser();
-
   return (
       <Layout>
         <Navbar />

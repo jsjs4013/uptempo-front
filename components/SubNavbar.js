@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-import { useEffect, useState } from 'react';
-
 import ControlIcon from "../public/icons8-touchscreen-30.png"
 import DevicelIcon from "../public/icons8-smartphones-30.png"
 

@@ -6,10 +6,15 @@ import { useState } from 'react';
 
 import Logo from "../public/uptempo-log-wh.png";
 import useUser from "../lib/useUser";
+import fetchJson from '../lib/fetchJson';
+import { useRouter } from 'next/router'
 
 export default function Navbar(props) {
-    const { user } = useUser();
+    const { user, mutateUser } = useUser();
+
+    const router = useRouter();
     const [active, setActive] = useState(false);
+    
     const [imgsvg, setImgsvg] = useState(
         <svg
             className='w-6 h-6'
@@ -82,19 +87,29 @@ export default function Navbar(props) {
                         </a>
                     </Link>
                 </div>
-                <Link href='/signin'>
-                    {user?.isLoggedIn ? (
-                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'>
-                            Sign Out
-                        </a>
-                    )
-                        :
-                    (
+                {
+                    !user?.isLoggedIn &&
+                    <Link href='/signin'>
                         <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'>
                             Sign In
                         </a>
-                    )}
-                </Link>
+                    </Link>
+                }
+                {
+                    user?.isLoggedIn &&
+                    <Link href='api/logout'>
+                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'
+                            onClick={async (event) => {
+                                event.preventDefault();
+                                mutateUser(
+                                    await fetchJson('/api/logout', { method: 'POST' })
+                                );
+                                router.push('/');
+                            }}>
+                            Sign Out
+                        </a>
+                    </Link>
+                }
                 <button className={`inline-flex p-3 rounded lg:hidden text-white outline-none ${effect && 'animate-wiggle'}`}
                     onClick={() => {
                         handleClick();
