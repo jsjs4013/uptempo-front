@@ -21,14 +21,30 @@ export default function DeviceCtrl() {
     const socketInitializer = async () => {
         await fetch('/api/socket');
         socket = io();
-        socket.open((msg) => {console.log(msg)});
+        
+        socket.on('connect', () => {
+            console.log('connected');
+        });
+
+        socket.on('update-input', msg => {
+            setInput(msg);
+        });
+    };
+    
+    const onChangeHandler = (e) => {
+        setInput(e.target.value);
+        socket.emit('input-change', e.target.value);
     };
     
 
     return (
         <Layout currentPage={currentPage}>
             <div>
-
+                {/* <input
+                    placeholder="Type something"
+                    value={input}
+                    onChange={onChangeHandler}
+                /> */}
             </div>
         </Layout>
     )

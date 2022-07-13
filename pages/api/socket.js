@@ -1,27 +1,31 @@
-import { Server, io } from 'Socket.IO';
+import { Server } from 'Socket.IO';
+import { io } from 'socket.io-client';
 
-const SocketHandler = (req, res) => {
+const SocketHandler = async (req, res) => {
+    const socketHeader = {
+        'Access-Control-Allow-Origin': true
+    };
+
     if (res.socket.server.io) {
         console.log('Socket is already running');
     } else {
         console.log('Socket is initializing');
-        const io2 = new Server(res.socket.server);
-        res.socket.server.io = io;
 
-        const socketHeader = {
-            'Access-Control-Allow-Origin': true
-        };
+        //////////////////// Connection ////////////////////
+        const socket_client = io('ws://61.74.187.4:7410', socketHeader);
+        socket_client.on('connection', msg => {
+            console.log(msg);
+        });
+        ////////////////////////////////////////////////////
 
+        const io1 = new Server(res.socket.server);
+        res.socket.server.io = io1;
 
-        socket2 = io('ws://61.74.187.4:7410', socketHeader);
-        socket.open((msg) => {console.log(msg)});
-        console.log('hi');
-
-        // io.on('connection', socket => {
-        //     socket.on('input-change', msg => {
-        //         socket.broadcast.emit('update-input', msg)
-        //     });
-        // });
+        io1.on('connection', socket => {
+            socket.on('input-change', msg => {
+                console.log(msg);
+            });
+        });
     }
     res.end();
 }
