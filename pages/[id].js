@@ -1,20 +1,34 @@
 import Navbar from '../components/Navbar';
 import Layout from '../components/Layout';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import io from 'socket.io-client';
+import axios from 'axios';
 
-import router from 'next/router';
-
-export default function Home() {
-    useEffect(() => {
-
-    }, []);
-
+let socket;
+export default function DeviceCtrl() {
     let currentPage = 1
+
+    const [input, setInput] = useState('');
+
+    const socketHeader = {
+        'Access-Control-Allow-Origin': true
+    };
+
+    useEffect(() => {
+        socketInitializer();
+    }, []);
+    
+    const socketInitializer = async () => {
+        await fetch('/api/socket');
+        socket = io();
+        socket.open((msg) => {console.log(msg)});
+    };
+    
 
     return (
         <Layout currentPage={currentPage}>
             <div>
-                <iframe src={`http://61.74.187.4:7100/#!/control${router.asPath}`}></iframe>
+
             </div>
         </Layout>
     )
