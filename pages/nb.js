@@ -16,7 +16,6 @@ export default function NB() {
   const [ano, setAno] = useState();
 
   const getList = () => {
-    let list = [];
     axios
       .get(`http://localhost:8080/nb?pageNumber=${pageNum}&pageSize=10`)
       .then((res) => {

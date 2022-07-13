@@ -77,7 +77,7 @@ export default function SignIn() {
                 <div className="flex justify-between items-center mb-6">
                 <div>
                     <a
-                      href="#!"
+                      href="../signup"
                       className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
                     >
                       회원 가입
