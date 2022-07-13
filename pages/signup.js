@@ -85,6 +85,8 @@ export default function SignUp() {
     await setDepartment(e.target.value);
   };
 
+  //sumit 함수 작성 필요
+
   return (
     <Layout>
       <section className="h-screen flex flex-col">
