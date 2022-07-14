@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function SignUp() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [password, setPassword] = useState(null);
   const [passwordConf, setPasswordConf] = useState();
   const [company, setCompany] = useState();
   const [department, setDepartment] = useState();
@@ -67,18 +67,16 @@ export default function SignUp() {
     var regExp =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
     setPassword_v(regExp.test(password));
-  }, [password]);
 
-  useEffect(() => {
-    if (password !== " ") {
+    if (password === null || password === "") {
+      return;
+    }
+    else {
       if (!password_v) {
         setPasswordMessage("유효한 비밀번호 형식이 아닙니다.");
       } else {
         setPasswordMessage(" ");
       }
-    }
-    else{
-      setPasswordMessage(" ");
     }
   }, [password, password_v]);
 
