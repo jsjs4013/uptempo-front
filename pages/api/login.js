@@ -21,7 +21,6 @@ async function login(req, res) {
   const redirectHeader = {
     method: "GET",
     withCredentials: true,
-    cookie: req.headers.cookie,
   };
   
   try {
@@ -33,18 +32,20 @@ async function login(req, res) {
       isLoggedIn: true
     }
     req.session.xsrf = xsrftokenBody;
-    await req.session.save();
 
     // Try redrict to regist jwt token
     try {
       const temp = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1NzYyNTM3NjIwOX0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.8K7MA9StGsq8PFubJgnKG8K7poft-cLRvL1bRhVDCI0', redirectHeader);
-      const data = temp;
+      const data2 = temp.headers;
+      console.log(data2);
     } catch (error) {
       console.log(error.message)
       res.status(500).json({name: error.name, message: (error).message });
     }
     //////////////////////////////////
 
+    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImEifSwiY3NyZlNlY3JldCI6InZPNFJQNTRZRVk3ajI4NXd5UWhvMllySCJ9", "ssid.sig=NCa6-oYpwetuKordgaxnKhBBhYM"]);
+    await req.session.save();
     res.json(xsrftokenBody);
   } catch (error) {
     res.status(500).json({ message: (error).message })

@@ -10,6 +10,17 @@ export default function Signin() {
     redirectIfFound: true,
   });
 
+  const fetchapiLogin = async (body) => {
+    return await fetchJson('/api/login', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        withCredentials: true,
+      },
+      body: JSON.stringify(body),
+    })
+  };
+  
   return (
     <Layout>
       <Form onSubmit={async (event) => {
@@ -22,13 +33,7 @@ export default function Signin() {
 
               try {
                 mutateUser(
-                  await fetchJson('api/login', {
-                    method: "POST",
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(body),
-                  })
+                  fetchapiLogin(body)
                 )
               } catch (error) {
                   console.log(error.message);
