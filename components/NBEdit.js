@@ -64,10 +64,10 @@ export default function NBEdit(props) {
           목록으로
         </button>
         <div className="pt-4 font-bold px-2 text-xl">글 작성하기</div>
-      <div className="border-t-2 border-b-2 my-2 py-2 border-gray-200">
+      <div className="border-t-2 border-b-2 my-2 py-2 border-gray-700">
         <div className="grid grid-cols-10 gap-4 py-2">
           <input
-            className="col-span-7 p-2.5 border-2 border-gray-500 rounded-lg my-1 active:border-gray-700 focus:border-gray-700"
+            className="col-span-7 p-2.5 border-b-2 border-gray-500 my-1 active:border-gray-700 focus:border-gray-700"
             placeholder="제목을 입력하세요"
             onChange={(e) => {
               e.preventDefault;
@@ -75,7 +75,7 @@ export default function NBEdit(props) {
             }}
           ></input>
           <input
-            className="col-span-3 p-2.5 border-2 border-gray-500 rounded-lg my-1"
+            className="col-span-3 p-2.5 border-b-2 border-gray-500 my-1"
             placeholder="작성자"
             onChange={(e) => {
               e.preventDefault;
@@ -84,8 +84,9 @@ export default function NBEdit(props) {
           ></input>
         </div>
         <textarea
-          className="p-2.5 w-full h-64 rounded-lg border-2 border-gray-500 h-80 my-2"
+          className="p-2.5 w-full border-gray-500 h-96 my-2 resize-none"
           placeholder="내용을 입력하세요."
+          wrap="hard"
           onChange={(e) => {
             e.preventDefault;
             handleChangeContent(e);
