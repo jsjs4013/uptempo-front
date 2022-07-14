@@ -1,5 +1,7 @@
 import Layout from "../components/Layout";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+
 
 export default function SignUp() {
   const [name, setName] = useState();
@@ -13,10 +15,12 @@ export default function SignUp() {
   const [email_v, setEmail_v] = useState(false);
   const [password_v, setPassword_v] = useState(false);
   const [passwordConf_v, setPasswordConf_v] = useState(false);
+  const [dup_v, setDup_v] = useState(false);
 
   const [emailMessage, setEmailMessage] = useState(" ");
   const [nameMessage, setNameMessage] = useState(" ");
   const [passwordMessage, setPasswordMessage] = useState(" ");
+  const [dupMessage, setDupMessage] = useState(" ");
 
   const handleChangeName = async (e) => {
     await setName(e.target.value);
@@ -30,6 +34,7 @@ export default function SignUp() {
   };
 
   const handleChangeEmail = async (e) => {
+    await setDup_v(false);
     await setEmail(e.target.value);
     var regExp =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
@@ -65,7 +70,7 @@ export default function SignUp() {
   }, [password]);
 
   useEffect(() => {
-    if (password !== "") {
+    if (password !== " ") {
       if (!password_v) {
         setPasswordMessage("유효한 비밀번호 형식이 아닙니다.");
       } else {
@@ -77,6 +82,16 @@ export default function SignUp() {
     }
   }, [password, password_v]);
 
+  useEffect(() => {
+    if(dup_v){
+      setEmailMessage(" ");
+      setDupMessage("사용할 수 있는 이메일 입니다.");
+    }
+    else {
+      setDupMessage(" ");
+    }
+  }, [dup_v])
+
   const handleChangeCompany = async (e) => {
     await setCompany(e.target.value);
   };
@@ -85,19 +100,42 @@ export default function SignUp() {
     await setDepartment(e.target.value);
   };
 
-  //sumit 함수 작성 필요
+  //submit 함수 작성 필요
+  const onSubmit = () => {
+    if(passwordConf_v && name_v && password_v && email_v){
+      alert('회원 가입이 완료되었습니다.');
+    }
+    else {
+      if(!name_v) alert('이름을 입력해 주세요.')
+      else if(!email_v){
+        alert('유효한 이메일을 입력해주세요.')
+      }
+      else if(!dup_v){
+        alert('이메일 중복 확인이 필요합니다.')
+      }
+      else if(!password_v){
+        alert('유효한 비밀번호를 입력해 주세요.')
+      }
+    }
+  }
+
+  const isEmailEx = () => {
+    if(!email_v){
+      alert('유효한 형식의 이메일을 먼저 입력해 주세요.');
+    }
+    else{
+      setDup_v(true);
+    }
+  }
 
   return (
     <Layout>
       <section className="h-screen flex flex-col">
         <div className="bg-gray-300">
           <div className="h-max container max-w-2xl mx-auto flex-1 flex flex-col items-center justify-center px-2 py-3">
-            <img
-              src="uptempo-log-wh.png"
-              className="w-2/5 my-6"
-              alt="Logo image"
-              onClick={(e) => {}}
-            />
+            <a href="../signin" className="w-2/5 my-6">
+              <img src="uptempo-log-wh.png" alt="Logo image" />
+            </a>
             <div className="bg-white px-10 py-8 rounded shadow-lg text-black w-full">
               <h1 className="mb-10 text-3xl text-center font-bold">
                 회원 가입
@@ -119,18 +157,30 @@ export default function SignUp() {
                 * 입력하신 주소로 인증메일이 발송됩니다. 사용 가능한 주소를
                 입력해 주세요.
               </p>
-              <input
-                type="text"
-                className="border border-gray-400 w-full p-3 rounded"
-                name="이메일"
-                placeholder="gildong.hong@kt.com"
-                onChange={(e) => {
-                  e.preventDefault;
-                  handleChangeEmail(e);
-                }}
-              />
-              <p className="ml-2 mb-4 text-red-500 text-sm">{emailMessage}</p>
-
+              <div className="flex">
+                <input
+                  type="text"
+                  className="border border-gray-400 w-2/3 p-3 rounded mr-3 flex-auto"
+                  name="이메일"
+                  placeholder="gildong.hong@kt.com"
+                  onChange={(e) => {
+                    e.preventDefault;
+                    handleChangeEmail(e);
+                  }}
+                />
+                <button
+                  className="border py-3 px-1 rounded-lg bg-slate-700 text-white shadow-sm transition ease-in-out hover:bg-slate-100 hover:text-gray-900 flex-auto"
+                  onClick={() => {
+                    isEmailEx();
+                  }}
+                >
+                  중복 확인
+                </button>
+              </div>
+              <div className="ml-2 mb-4 ">
+                <p className="text-red-500 text-sm">{emailMessage}</p>
+                <p className="text-sm text-green-600">{dupMessage}</p>
+              </div>
               <p className="font-bold"> • 비밀번호 (*필수)</p>
               <input
                 type="password"
@@ -182,7 +232,10 @@ export default function SignUp() {
 
               <button
                 type="submit"
-                className="w-full text-center mt-5 py-3 rounded-2xl text-lg bg-slate-700 text-white hover:bg-slate-100 hover:text-gray-900 focus:outline-none my-1 font-medium transition ease-in-out shadow-md"
+                className="w-full text-center mt-5 py-3 rounded-xl text-lg bg-slate-700 text-white hover:bg-slate-100 hover:text-gray-900 my-1 font-bold transition ease-in-out shadow-md"
+                onClick={() => {
+                  onSubmit();
+                }}
               >
                 계정 생성
               </button>
