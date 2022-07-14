@@ -10,6 +10,8 @@ import useDevices from '../lib/useDevices';
 import device from './api/device';
 import Link from 'next/link';
 
+import fetchJson from "../lib/fetchJson";
+
 const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
 const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
 
@@ -41,7 +43,6 @@ export default function Device() {
     return (
         <Layout currentPage={currentPage}>
             {}
-            {console.log('sadasdsassa: ' + user?.isLoggedIn)}
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
                     <DynamicDesktop>
@@ -99,7 +100,7 @@ export default function Device() {
                             
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {
-                                    devices?.devices.filter((device) => !device.using).map((device) => (
+                                    devices?.devices.filter((device) => device.present).map((device) => (
                                         <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
                                             <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
                                                 <Image
@@ -117,6 +118,13 @@ export default function Device() {
                                                     <a className="mx-1">사용하기</a>
                                                 </button>
                                             </Link>
+                                            <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                                                onClick={ async () => await fetchJson(
+                                                    '/api/stopUsing'
+                                                )}
+                                            >
+                                                    <a className="mx-1">사용중지</a>
+                                            </button>
                                         </div>
                                 ))}
                             </div>

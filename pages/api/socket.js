@@ -1,5 +1,5 @@
 import { Server } from 'Socket.IO';
-import { io } from 'socket.io-client';
+import { WebSocket } from 'ws';
 
 const SocketHandler = async (req, res) => {
     const socketHeader = {
@@ -11,21 +11,39 @@ const SocketHandler = async (req, res) => {
     } else {
         console.log('Socket is initializing');
 
+        // const socketServer = res.socket.server;
+        // const wss = new WebSocket.Server({ port: 3000 });
+        // res.socket.server.wss = wss;
+
         //////////////////// Connection ////////////////////
-        const socket_client = io('ws://61.74.187.4:7410', socketHeader);
-        socket_client.on('connection', msg => {
-            console.log(msg);
-        });
+        // wss.on('connection', ws => {
+        //     ws.on('message', message => {
+        //         console.log('received: %s', message)
+        //     })
+          
+        //     ws.send('something')
+        // })          
         ////////////////////////////////////////////////////
 
-        const io1 = new Server(res.socket.server);
-        res.socket.server.io = io1;
-
-        io1.on('connection', socket => {
-            socket.on('input-change', msg => {
-                console.log(msg);
-            });
+        const ws = new WebSocket('ws://61.74.187.4:7410');
+        
+        ws.on('open', function open() {
         });
+
+        ws.onmessage = (() => {
+            return function messageListener(message) {
+                console.log(message.data);
+            }
+        })();
+
+        // const io1 = new Server(res.socket.server);
+        // res.socket.server.io = io1;
+
+        // io1.on('connection', socket => {
+        //     socket.on('input-change', msg => {
+        //         console.log(msg);
+        //     });
+        // });
     }
     res.end();
 }

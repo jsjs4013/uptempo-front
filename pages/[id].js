@@ -10,41 +10,19 @@ export default function DeviceCtrl() {
 
     const [input, setInput] = useState('');
 
-    const socketHeader = {
-        'Access-Control-Allow-Origin': true
-    };
-
     useEffect(() => {
-        socketInitializer();
+        openDevicePage();
     }, []);
-    
-    const socketInitializer = async () => {
-        await fetch('/api/socket');
-        socket = io();
-        
-        socket.on('connect', () => {
-            console.log('connected');
-        });
 
-        socket.on('update-input', msg => {
-            setInput(msg);
-        });
-    };
-    
-    const onChangeHandler = (e) => {
-        setInput(e.target.value);
-        socket.emit('input-change', e.target.value);
-    };
+    const openDevicePage = async () => {
+        window.open('http://61.74.187.4:7100/#!/control/R3CT104SAYT', '_blank', 'width=700, height=1000', 'scrollbars=no');
+    }
     
 
     return (
         <Layout currentPage={currentPage}>
             <div>
-                {/* <input
-                    placeholder="Type something"
-                    value={input}
-                    onChange={onChangeHandler}
-                /> */}
+                
             </div>
         </Layout>
     )
