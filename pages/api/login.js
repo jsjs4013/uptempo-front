@@ -10,22 +10,22 @@ async function login(req, res) {
 
   const swrHeader = {
     method: "POST",
+    url: 'http://61.74.187.4:7100/auth/api/v1/mock',
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({
+    data: JSON.stringify({
       "name": name,
       "email": email
     })
   };
   const redirectHeader = {
     method: "GET",
-    withCredentials: true,
   };
   
   try {
-    const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
-    const xsrftokenJSON = await xsrftoken.json();
+    const xsrftoken = await axios(swrHeader);
+    const xsrftokenJSON = xsrftoken.data;
     const xsrftokenBody = {
       success: xsrftokenJSON.success,
       jwt: xsrftokenJSON.redirect.substring(xsrftokenJSON.redirect.indexOf('jwt=') + 4),
@@ -35,16 +35,13 @@ async function login(req, res) {
 
     // Try redrict to regist jwt token
     try {
-      const temp = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1NzYyNTM3NjIwOX0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.8K7MA9StGsq8PFubJgnKG8K7poft-cLRvL1bRhVDCI0', redirectHeader);
-      const data2 = temp.headers;
-      console.log(data2);
+      const temp = await axios('http://61.74.187.4:7100/?jwt=' + xsrftokenBody.jwt);
     } catch (error) {
-      console.log(error.message)
       res.status(500).json({name: error.name, message: (error).message });
     }
-    //////////////////////////////////
+    ////////////////////////////////
 
-    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImEifSwiY3NyZlNlY3JldCI6InZPNFJQNTRZRVk3ajI4NXd5UWhvMllySCJ9", "ssid.sig=NCa6-oYpwetuKordgaxnKhBBhYM"]);
+    // res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImFzZCJ9LCJjc3JmU2VjcmV0IjoiWXp6THIxT2FzZHdBZkowdVhqU25oTGstIn0%3D", "ssid.sig=AlmNw8wzfRoPdyfTpj1TqZxxJag"]);
     await req.session.save();
     res.json(xsrftokenBody);
   } catch (error) {

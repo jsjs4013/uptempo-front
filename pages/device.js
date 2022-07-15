@@ -4,11 +4,14 @@ import CategoryModals from '../components/CategoryModals'
 import dynamic from 'next/dynamic'
 import Router from 'next/router';
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useUser from '../lib/useUser';
 import useDevices from '../lib/useDevices';
 import device from './api/device';
 import Link from 'next/link';
+
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../lib/session';
 
 import fetchJson from "../lib/fetchJson";
 
@@ -25,12 +28,9 @@ const DynamicPhone = dynamic( // For no SSR
     { ssr: false }
   )
 
-export default function Device() {
+export default function ssrDevice(ssrUser) {
+    const { user } = useUser();
     let currentPage = 2
-    const { user } = useUser({
-        redirectTo: "/",
-        redirectIfFound: false,
-    });
     const { devices } = useDevices(user);
     const [selected, setSelected] = useState([0, 0]);
 
@@ -85,7 +85,7 @@ export default function Device() {
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
                             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-                                <p className="text-gray-500 dark:text-gray-900">5 Items</p>
+                                <p className="text-gray-500 dark:text-gray-900">{devices?.length} Items</p>
                                 <div className="flex items-center">
                                     <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
                                     <label htmlFor="underline_select" className="sr-only">Underline select</label>
@@ -113,20 +113,32 @@ export default function Device() {
                                             <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
                                             <p className="text-blue-900">{device.manufacturer}</p>
 
-                                            <Link href="/[id]" as={`/${device.marketName}`} >
-                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                                    <a className="mx-1">사용하기</a>
-                                                </button>
-                                            </Link>
-                                            <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                                                onClick={ async () => await fetchJson(
-                                                    '/api/stopUsing'
-                                                )}
-                                            >
+                                            {!device.using &&
+                                                <Link href="/[id]" as={`/${device.marketName}`} >
+                                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                                        <a className="mx-1">사용하기</a>
+                                                    </button>
+                                                </Link>
+                                            }
+                                            {device.using &&
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
+                                                    onClick={ async () => {await fetchJson(
+                                                            '/api/stopUsing', {
+                                                            method: "POST",
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({serial: device.serial}),
+                                                        });
+                                                    }
+                                                    // Router.reload('/devices');
+                                                }>
                                                     <a className="mx-1">사용중지</a>
-                                            </button>
+                                                </button>
+                                            }
                                         </div>
-                                ))}
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
@@ -135,3 +147,27 @@ export default function Device() {
         </Layout>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
+    const user = req.session.xsrf
+    console.log('Here server');
+  
+    if (!user?.isLoggedIn) {
+      res.setHeader('location', '/')
+      res.statusCode = 302
+      res.end()
+      return {
+        props: {
+            user: {
+                success: true,
+                isLoggedIn: false,
+            }
+        },
+      }
+    }
+  
+    return {
+      props: { user: req.session.xsrf },
+    }
+  },
+  sessionOptions)

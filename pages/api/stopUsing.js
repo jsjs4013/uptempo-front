@@ -4,6 +4,8 @@ import { sessionOptions } from "/lib/session";
 export default withIronSessionApiRoute(stopUsing, sessionOptions);
 
 async function stopUsing(req, res) {
+    const { serial } = await req.body;
+
     const swrHeader = {
         method: "DELETE",
         headers: {
@@ -14,7 +16,7 @@ async function stopUsing(req, res) {
     
     if (req.session.xsrf) {
         try {
-            const devicesInfo = await fetch('http://61.74.187.4:7100/api/v1/users/aaa@a.com/devices/R3CT104SAYT', swrHeader);
+            const devicesInfo = await fetch(`http://61.74.187.4:7100/api/v1/users/a@a.com/devices/${serial}`, swrHeader);
 
             const deviceInfoJSON = await devicesInfo.json();
 

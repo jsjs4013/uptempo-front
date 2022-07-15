@@ -6,8 +6,7 @@ export default withIronSessionApiRoute(userRoute, sessionOptions);
 async function userRoute(req, res) {
   if (req.session.xsrf) {
     res.json({
-      ...req.session.xsrf,
-      isLoggedIn: true,
+      ...req.session.xsrf
     });
   } else {
     res.json({

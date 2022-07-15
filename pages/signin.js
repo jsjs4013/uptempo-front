@@ -33,7 +33,14 @@ export default function Signin() {
 
               try {
                 mutateUser(
-                  fetchapiLogin(body)
+                  await fetchJson('/api/login', {
+                    method: "POST",
+                    headers: {
+                      'Content-Type': 'application/json',
+                      withCredentials: true,
+                    },
+                    body: JSON.stringify(body),
+                  })
                 )
               } catch (error) {
                   console.log(error.message);
