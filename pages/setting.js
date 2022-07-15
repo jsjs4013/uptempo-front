@@ -8,8 +8,7 @@ export default function Setting() {
     let currentPage = 3
 
     return (
-        <Layout>
-            <Navbar currentPage={currentPage} />
+        <Layout currentPage={currentPage}>
             <div>
                 Up-tempo sample setting page
             </div>

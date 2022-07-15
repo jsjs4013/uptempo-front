@@ -1,6 +1,7 @@
 import Head from 'next/head'
+import Navbar from './Navbar'
 
-export default function Layout({children}) {
+export default function Layout({currentPage, children}) {
     return (
         <div>
             <Head>
@@ -8,7 +9,8 @@ export default function Layout({children}) {
                 <meta name="description" content="Up-tempo device farm" />
                 <link rel="icon" href="/uptempo.png" />
             </Head>
-            <main> 
+            <main>
+                {currentPage && <Navbar currentPage={currentPage} />}
                 {children}
             </main>
         </div>
