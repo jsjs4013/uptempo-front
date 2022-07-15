@@ -1,15 +1,19 @@
-import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Navbar from '../components/Navbar'
 import Layout from '../components/Layout'
-import CategoryChoose from '../components/CategoryChoose'
 import CategoryModals from '../components/CategoryModals'
 import dynamic from 'next/dynamic'
+import Router from 'next/router';
 
-import { Dialog, Transition, RadioGroup } from '@headlessui/react'
-import { Fragment, useState } from 'react'
-import classNames from 'classnames';
+import { useEffect, useState } from 'react'
+import useUser from '../lib/useUser';
+import useDevices from '../lib/useDevices';
+import device from './api/device';
+import Link from 'next/link';
+
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../lib/session';
+
+import fetchJson from "../lib/fetchJson";
 
 const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
 const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
@@ -24,17 +28,21 @@ const DynamicPhone = dynamic( // For no SSR
     { ssr: false }
   )
 
-export default function Device() {
+export default function ssrDevice(ssrUser) {
+    const { user } = useUser();
     let currentPage = 2
-    const [selected, setSelected] = useState([0, 0])
+    const { devices } = useDevices(user);
+    const [selected, setSelected] = useState([0, 0]);
 
     function setSelect(selectNum) {
         setSelected(selectNum)
     }
-    
+
+    console.log(devices?.devices[0].model);
+
     return (
-        <Layout>
-            <Navbar currentPage={currentPage} />
+        <Layout currentPage={currentPage}>
+            {}
             <section className="bg-white">
                 <div className="container px-6 py-8 mx-auto">
                     <DynamicDesktop>
@@ -44,7 +52,6 @@ export default function Device() {
                         </div>
                     </DynamicDesktop>
                     <div className="lg:flex lg:-mx-2">
-                        {console.log('use')}
                         <DynamicDesktop>
                             <div className="space-y-3 tracking-widest mt-2 lg:w-1/5 lg:px-2 lg:space-y-2">
                                 <div className='flex w-36 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-gray-600'>
@@ -78,7 +85,7 @@ export default function Device() {
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
                             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-                                <p className="text-gray-500 dark:text-gray-900">5 Items</p>
+                                <p className="text-gray-500 dark:text-gray-900">{devices?.length} Items</p>
                                 <div className="flex items-center">
                                     <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
                                     <label htmlFor="underline_select" className="sr-only">Underline select</label>
@@ -90,97 +97,48 @@ export default function Device() {
                                     </select>
                                 </div>
                             </div>
-
+                            
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-a73-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy A73 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
+                                {
+                                    devices?.devices.filter((device) => device.present).map((device) => (
+                                        <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
+                                            <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
+                                                <Image
+                                                    src='/Galaxy/samsung-galaxy-a73-5g.jpeg'
+                                                    className='object-cover w-full rounded-md h-72 xl:h-80'
+                                                    height={200}
+                                                    width={150}
+                                                />
+                                            </div>
+                                            <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
+                                            <p className="text-blue-900">{device.manufacturer}</p>
 
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-m53-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy M53 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/Galaxy/samsung-galaxy-s20-fe-5g.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='Galaxy'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">Galaxy S20 FE 5G</h4>
-                                    <p className="text-blue-900">SAMSUNG</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/iphone/apple-iphone-13-pro.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='iPhone'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
-                                    <p className="text-blue-900">APPLE</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
-                                
-                                <div className="flex flex-col items-center justify-center max-w-lg mx-auto">
-                                    <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
-                                        <Image
-                                            src='/iphone/apple-iphone-13-pro.jpeg'
-                                            className='object-cover w-full rounded-md h-72 xl:h-80'
-                                            height={200}
-                                            width={150}
-                                            alt='iPhone'
-                                        />
-                                    </div>
-                                    <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">iPhone 13 PRO</h4>
-                                    <p className="text-blue-900">APPLE</p>
-
-                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
-                                        <span className="mx-1">예약하기</span>
-                                    </button>
-                                </div>
+                                            {!device.using &&
+                                                <Link href="/[id]" as={`/${device.marketName}`} >
+                                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">
+                                                        <a className="mx-1">사용하기</a>
+                                                    </button>
+                                                </Link>
+                                            }
+                                            {device.using &&
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
+                                                    onClick={ async () => {await fetchJson(
+                                                            '/api/stopUsing', {
+                                                            method: "POST",
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({serial: device.serial}),
+                                                        });
+                                                    }
+                                                    // Router.reload('/devices');
+                                                }>
+                                                    <a className="mx-1">사용중지</a>
+                                                </button>
+                                            }
+                                        </div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
@@ -189,3 +147,27 @@ export default function Device() {
         </Layout>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
+    const user = req.session.xsrf
+    console.log('Here server');
+  
+    if (!user?.isLoggedIn) {
+      res.setHeader('location', '/')
+      res.statusCode = 302
+      res.end()
+      return {
+        props: {
+            user: {
+                success: true,
+                isLoggedIn: false,
+            }
+        },
+      }
+    }
+  
+    return {
+      props: { user: req.session.xsrf },
+    }
+  },
+  sessionOptions)

@@ -1,16 +1,20 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 
-import SubNavbar from './SubNavbar'
-import { useEffect, useState } from 'react';
+import SubNavbar from './SubNavbar';
+import { useState } from 'react';
 
-import Logo from "../public/uptempo-log-wh.png"
-import ControlIcon from "../public/icons8-touchscreen-30.png"
-import DevicelIcon from "../public/icons8-smartphones-30.png"
-import { passThroughSymbol } from 'next/dist/server/web/spec-compliant/fetch-event';
+import Logo from "../public/uptempo-log-wh.png";
+import useUser from "../lib/useUser";
+import fetchJson from '../lib/fetchJson';
+import { useRouter } from 'next/router'
 
 export default function Navbar(props) {
+    const { user, mutateUser } = useUser();
+
+    const router = useRouter();
     const [active, setActive] = useState(false);
+    
     const [imgsvg, setImgsvg] = useState(
         <svg
             className='w-6 h-6'
@@ -62,8 +66,8 @@ export default function Navbar(props) {
                     onAnimationEnd={() => {
                         setEffect(false);
                     }}
-                    width={25}
-                    height={25}
+                    width={24}
+                    height={24}
                 />
             )
         }
@@ -83,7 +87,30 @@ export default function Navbar(props) {
                         </a>
                     </Link>
                 </div>
-                <button className={`inline-flex p-3 rounded lg:hidden text-white ml-auto outline-none ${effect && 'animate-wiggle'}`}
+                {
+                    !user?.isLoggedIn &&
+                    <Link href='/signin'>
+                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'>
+                            Sign In
+                        </a>
+                    </Link>
+                }
+                {
+                    user?.isLoggedIn &&
+                    <Link href='api/logout'>
+                        <a className='inline-flex items-center text-white capitalize outline-none border border-slate-100 duration-500 hover:border-slate-500 hover:text-slate-500 rounded-md px-2 py-1 ml-auto mr-2'
+                            onClick={async (event) => {
+                                event.preventDefault();
+                                mutateUser(
+                                    await fetchJson('/api/logout', { method: 'POST' })
+                                );
+                                router.push('/');
+                            }}>
+                            Sign Out
+                        </a>
+                    </Link>
+                }
+                <button className={`inline-flex p-3 rounded lg:hidden text-white outline-none ${effect && 'animate-wiggle'}`}
                     onClick={() => {
                         handleClick();
                         setEffect(true);
@@ -96,7 +123,7 @@ export default function Navbar(props) {
 
                 </button>
             </nav>
-            <SubNavbar currentPage={props.currentPage} active={active} changeState={handleClick}/>
+            <SubNavbar currentPage={props.currentPage} active={active}/>
             {
                 active && <button className='fixed cursor-auto top-0 w-full h-full backdrop-blur-sm bg-[#2b3d51]/50 z-10'
                                 onClick={() => {
