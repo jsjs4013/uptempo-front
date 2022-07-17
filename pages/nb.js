@@ -17,7 +17,7 @@ export default function NB() {
 
   const getList = () => {
     axios
-      .get(`http://localhost:8080/api/v1/nb?pageNumber=${pageNum}&pageSize=10`)
+      .get(`http://localhost:8083/api/v1/nb?pageNumber=${pageNum}&pageSize=10`)
       .then((res) => {
         if (res.status === 200) {
           setArticleList(res.data);
@@ -35,7 +35,7 @@ export default function NB() {
 
   const getArticle = async () => {
     axios
-      .get(`http://localhost:8080/api/v1/nb/arti/${ano}`)
+      .get(`http://localhost:8083/api/v1/nb/arti/${ano}`)
       .then((res) => {
         if (res.status === 200) {
           setArticle(res.data);
@@ -50,7 +50,7 @@ export default function NB() {
   const registerArticle = async (contents) => {
     console.log("reg func called");
     axios
-      .post("http://localhost:8080/api/v1/nb", {
+      .post("http://localhost:8083/api/v1/nb", {
         content: contents.content,
         password: contents.password,
         subject: contents.subject,

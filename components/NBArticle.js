@@ -31,7 +31,7 @@ export default function NBArticle(props) {
         </div>
       </div>
       <div className="my-4 px-6 h-fit min-h-screen py-3 text-lg">
-        <pre className="inline-block align-text-top">{props.article.content}</pre>
+        <pre className="whitespace-pre-wrap break-words">{props.article.content}</pre>
       </div>
     </div>
   );
