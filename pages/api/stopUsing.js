@@ -10,7 +10,7 @@ async function stopUsing(req, res) {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer 642e2d33537442efa0cec64de531b3db1514a99d9d834dcd867ea03e22d1428f',
+            'Authorization': 'Bearer 66a01a1156cb43068acf44546fe42ade6e61a2cad3f745c0bf16ca99c19ffa69',
         }
     };
     
