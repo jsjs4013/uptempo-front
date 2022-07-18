@@ -17,33 +17,33 @@ export default function Signin() {
 
 useEffect(() => async() => {
   // Try redrict to regist jwt token
-  // try {
-  //   const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODExOTgzODEyOX0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoic2FkIn0.NTHExodN99CmpUcVtwoFLzsef_mHPEHBgbfoaBpho_Q', {withCredentials: true});
-  //   console.log(redirectToken);
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
-  //////////////////////////////////
-
   try {
-    const body = {
-      name: "a",
-      email: "a@a.com"
-    }
-
-    const resultLogin = await axiosJson('/api/login', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-    console.log('dasklhdsakl');
-    console.log('ads');
-    console.log(resultLogin)
+    const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODEzMTk4OTQzMX0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.cJlPNWnX2b-tumVbZTzK8zhH29kb7pyUJnX9LjtnPXY', {withCredentials: true});
+    console.log(redirectToken);
   } catch (error) {
     console.log(error.message);
   }
+  //////////////////////////////////
+
+  // try {
+  //   const body = {
+  //     name: "a",
+  //     email: "a@a.com"
+  //   }
+
+  //   const resultLogin = await axiosJson('/api/login', {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(body),
+  //   });
+  //   console.log('dasklhdsakl');
+  //   console.log('ads');
+  //   console.log(resultLogin)
+  // } catch (error) {
+  //   console.log(error.message);
+  // }
 }, []);
   
   return (
