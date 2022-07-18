@@ -38,7 +38,7 @@ async function loginRoute(req, res) {
     }
     //////////////////////////////////
 
-    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImEifX0%3D; path=/; samesite=lax; httponly;", "ssid.sig=srHjCVHrrzEpeQ1Qm4DpOB4qUjo; path=/; samesite=lax; httponly;"]);
+    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGFiLmNvbSIsIm5hbWUiOiJhIn19; path=/; samesite=lax; httponly;", "ssid.sig=rDjhrXhIH03gQtxcB5XZkPR0kUY; path=/; samesite=lax; httponly;"]);
     await req.session.save();
     
     res.json(xsrftokenBody);
