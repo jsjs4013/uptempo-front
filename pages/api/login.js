@@ -1,5 +1,6 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { sessionOptions } from '/lib/session'
+import axios from 'axios';
 
 export default withIronSessionApiRoute(loginRoute, sessionOptions)
 
@@ -18,7 +19,6 @@ async function loginRoute(req, res) {
   };
   
   try {
-    console.log('This')
     const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
     const xsrftokenJSON = await xsrftoken.json();
     const xsrftokenBody = {
@@ -31,8 +31,8 @@ async function loginRoute(req, res) {
 
     // Try redrict to regist jwt token
     try {
-      const redirectToken = await fetch(xsrftokenJSON?.redirect);
-      console.log(await redirectToken.json());
+      const redirectToken = await axios(xsrftokenJSON.redirect, {withCredentials: true});
+      console.log(redirectToken.headers);
     } catch (error) {
       console.log(error.message);
       res.status(500).json({name: error.name, message: (error).message });

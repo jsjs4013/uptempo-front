@@ -5,6 +5,7 @@ export default withIronSessionApiRoute(logoutRoute, sessionOptions)
 
 function logoutRoute(req, res) {
     res.setHeader('Set-Cookie', `ssid=; path=/; expires=-1`)
+    res.setHeader('Set-Cookie', `ssid.sig=; path=/; expires=-1`);
     req.session.destroy();
     res.json({ success: true, isLoggedIn: false });
 }
