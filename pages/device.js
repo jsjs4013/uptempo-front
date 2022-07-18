@@ -150,8 +150,7 @@ export default function ssrDevice(ssrUser) {
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
     const user = req.session.xsrf
-    console.log('Here server');
-  
+    
     if (!user?.isLoggedIn) {
       res.setHeader('location', '/')
       res.statusCode = 302

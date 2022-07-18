@@ -7,7 +7,7 @@ async function deviceRoute(req, res) {
     const swrHeader = {
         method: "GET",
         headers: {
-            'Authorization': 'Bearer 642e2d33537442efa0cec64de531b3db1514a99d9d834dcd867ea03e22d1428f',
+            'Authorization': 'Bearer f0bc1310f78d496b80d2bd16211dc925f7d3346e9bbf4abb8e5fd81d87ebe0d0',
         }
     };
     
