@@ -64,10 +64,10 @@ export default function Form(props) {
                     <div className="flex justify-between items-center mb-6">
                     <div>
                         <a
-                            href="#!"
+                            href="./signup"
                             className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out outline-none"
                         >
-                            회원 가입(만드는 중)
+                            회원 가입
                         </a>
                         <a
                             href="#!"
