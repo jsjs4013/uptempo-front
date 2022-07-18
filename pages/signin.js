@@ -18,7 +18,7 @@ export default function Signin() {
 useEffect(() => async() => {
   // Try redrict to regist jwt token
   try {
-    const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODEzMjgwMTYzNX0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.bSGIo6z9poxBax_fMqzCn0r3QiLB3kcSydeXXpgtc6w', {withCredentials: true});
+    const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODEzMzAyNTU4Nn0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.oiSjwUovICOu8edDxueq6RJ_1K-MaKjZJi-fdjUDPkw');
     console.log(redirectToken);
   } catch (error) {
     console.log(error.message);
