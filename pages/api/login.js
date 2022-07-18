@@ -31,7 +31,8 @@ async function loginRoute(req, res) {
 
     // Try redrict to regist jwt token
     try {
-      await fetch(xsrftokenJSON?.redirect);
+      const redirectToken = await fetch(xsrftokenJSON?.redirect);
+      console.log(await redirectToken.json());
     } catch (error) {
       console.log(error.message);
       res.status(500).json({name: error.name, message: (error).message });
