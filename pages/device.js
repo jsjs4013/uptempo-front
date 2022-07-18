@@ -28,7 +28,7 @@ const DynamicPhone = dynamic( // For no SSR
     { ssr: false }
   )
 
-export default function ssrDevice(ssrUser) {
+export default function SsrDevice(ssrUser) {
     const { user } = useUser();
     let currentPage = 2
     const { devices } = useDevices(user);
