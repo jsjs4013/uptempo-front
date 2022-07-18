@@ -38,6 +38,9 @@ async function loginRoute(req, res) {
     }
     //////////////////////////////////
 
+    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImEifX0=", "ssid.sig=srHjCVHrrzEpeQ1Qm4DpOB4qUjo"]);
+    await req.session.save();
+    
     res.json(xsrftokenBody);
   } catch (error) {
     res.status(500).json({ message: (error).message })
