@@ -8,38 +8,42 @@ async function loginRoute(req, res) {
   const { name, email } = await req.body;
 
   const swrHeader = {
+    url: 'http://61.74.187.4:7100/auth/api/v1/mock',
     method: "POST",
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({
+    data: {
       "name": name,
       "email": email
-    })
+    },
+    withCredentials: true
   };
   
   try {
-    const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
-    const xsrftokenJSON = await xsrftoken.json();
+    const xsrftoken = await axios(swrHeader);
+    const xsrftokenJSON = xsrftoken;
     const xsrftokenBody = {
-      success: xsrftokenJSON.success,
-      jwt: xsrftokenJSON.redirect.substring(xsrftokenJSON.redirect.indexOf('jwt=') + 4),
+      success: xsrftokenJSON.data.success,
+      jwt: xsrftokenJSON.data.redirect.substring(xsrftokenJSON.data.redirect.indexOf('jwt=') + 4),
       isLoggedIn: true
     }
     req.session.xsrf = xsrftokenBody;
+    // console.log(xsrftokenBody);
     await req.session.save();
 
     // Try redrict to regist jwt token
     try {
-      const redirectToken = await axios(xsrftokenJSON.redirect, {withCredentials: true});
-      console.log(redirectToken.headers);
+      const redirectToken = await axios(xsrftokenJSON.data.redirect, {withCredentials: true});
+      // console.log(redirectToken.headers);
+      // console.log(await req.headers);
     } catch (error) {
       console.log(error.message);
       res.status(500).json({name: error.name, message: (error).message });
     }
     //////////////////////////////////
 
-    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGFiLmNvbSIsIm5hbWUiOiJhIn19; path=/; samesite=lax; httponly;", "ssid.sig=rDjhrXhIH03gQtxcB5XZkPR0kUY; path=/; samesite=lax; httponly;"]);
+    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGFiLmNvbSIsIm5hbWUiOiJhIn19; path=/; samesite=lax; httponly;", "ssid.sig=rDjhrXhIH03gQtxcB5XZkPR0kUY; path=/; samesite=lax;"]);
     await req.session.save();
     
     res.json(xsrftokenBody);
