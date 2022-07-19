@@ -17,7 +17,7 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            <div style="position:absolute; top:-360px; left:0px;">
+            <div className='absolute'>
                 <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="860" height="840" scrolling="no" frameborder="0"></iframe>
             </div>
         </Layout>
