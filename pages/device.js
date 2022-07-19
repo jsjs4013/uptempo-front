@@ -147,7 +147,7 @@ export default function SsrDevice(ssrUser) {
 }
 
 async function deviceContHandler(method, deviceSerial) {
-    return await fetchJson(
+    return (await fetchJson(
         '/api/deviceCont', {
         method: "POST",
         headers: {
@@ -158,7 +158,7 @@ async function deviceContHandler(method, deviceSerial) {
             method: method
         }),
         credentials: 'include',
-    });
+    }))
 }
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
