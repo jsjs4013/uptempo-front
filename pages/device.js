@@ -7,8 +7,8 @@ import Router from 'next/router';
 import { useEffect, useState } from 'react'
 import useUser from '../lib/useUser';
 import useDevices from '../lib/useDevices';
+import useGetDevice from '../lib/useGetDevice';
 import device from './api/device';
-import Link from 'next/link';
 
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
@@ -32,6 +32,8 @@ export default function SsrDevice(ssrUser) {
     const { user } = useUser();
     let currentPage = 2
     const { devices } = useDevices(user);
+    const { mutateGetDev } = useGetDevice(user);
+    
     const [selected, setSelected] = useState([0, 0]);
 
     function setSelect(selectNum) {
@@ -107,7 +109,6 @@ export default function SsrDevice(ssrUser) {
                                                     height={200}
                                                     width={150}
                                                 />
-                                                {console.log('This part is devices')}
                                             </div>
                                             <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
                                             <p className="text-blue-900">{device.manufacturer}</p>
@@ -117,7 +118,9 @@ export default function SsrDevice(ssrUser) {
                                                     onClick={ async (event) => {
                                                         const deviceCont = await deviceContHandler("POST", device.serial);
                                                         deviceCont.success ?
-                                                            Router.push('/control')
+                                                            (
+                                                                mutateGetDev(device.serial)
+                                                            )
                                                         :
                                                             event.preventDefault();
                                                     }
