@@ -17,7 +17,7 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            <div className='relative w-full h-0'>
+            <div className='relative w-3/6 h-0 overflow-hidden'>
                 <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="1200" height="1200" scrolling="no" frameBorder="300"></iframe>
             </div>
         </Layout>
