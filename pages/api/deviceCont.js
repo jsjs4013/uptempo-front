@@ -1,18 +1,17 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "/lib/session";
 
-export default withIronSessionApiRoute(stopUsing, sessionOptions);
+export default withIronSessionApiRoute(deviceCont, sessionOptions);
 
-async function stopUsing(req, res) {
-    const { serial } = await req.body;
+async function deviceCont(req, res) {
+    const { serial, method } = await req.body;
     const useremail = req.session.xsrf.useremail;
 
     const cookieSSID = await req.cookies['ssid'];
     const cookieSSIDSIG = await req.cookies['ssid.sig'];
-    console.log(cookieSSID);
-    console.log(cookieSSIDSIG);
+
     const swrHeader = {
-        method: "DELETE",
+        method: method,
         headers: {
             'Accept': 'application/json',
             'Cookie': `ssid=${cookieSSID}; ssid.sig=${cookieSSIDSIG}`
@@ -24,7 +23,7 @@ async function stopUsing(req, res) {
             const devicesInfo = await fetch(`http://61.74.187.4:7100/api/v1/user/devices/${serial}`, swrHeader);
 
             const deviceInfoJSON = await devicesInfo.json();
-
+            console.log(deviceInfoJSON);
             res.json({
                 success: true,
                 ...deviceInfoJSON
