@@ -23,11 +23,11 @@ async function loginRoute(req, res) {
     const xsrftoken = await axios(swrHeader);
     const xsrftokenJSON = xsrftoken;
     const xsrftokenBody = {
-      success: xsrftokenJSON.data.success,
-      jwt: xsrftokenJSON.data.redirect.substring(xsrftokenJSON.data.redirect.indexOf('jwt=') + 4),
+      success: JSON.stringify(xsrftokenJSON.data.success),
+      jwt: JSON.stringify(xsrftokenJSON.data.redirect.substring(xsrftokenJSON.data.redirect.indexOf('jwt=') + 4)),
       isLoggedIn: true
     }
-    req.session.xsrf = xsrftokenBody;
+    req.session.xsrf = JSON.stringify(xsrftokenBody);
     // console.log(xsrftokenBody);
     await req.session.save();
     

@@ -5,9 +5,15 @@ import Navbar from '../components/Navbar'
 import Layout from '../components/Layout'
 import { useEffect } from 'react'
 import axios from 'axios'
+import useUser from '../lib/useUser'
 
 export default function Control() {
     let currentPage = 1;
+
+    const { user } = useUser({
+        redirectTo: "/",
+        redirectIfFound: true,
+    });
 
     return (
         <Layout currentPage={currentPage}>
