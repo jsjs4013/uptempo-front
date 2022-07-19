@@ -12,7 +12,7 @@ export default function Control() {
 
     const { user } = useUser({
         redirectTo: "/",
-        redirectIfFound: true,
+        redirectIfFound: false,
     });
 
     return (
