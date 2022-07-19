@@ -8,6 +8,9 @@ async function deviceRoute(req, res) {
         method: "GET",
     };
     
+    console.log(req.cookies);
+    console.log(req.cookies['uptempo']);
+    console.log(req.cookies['ssid.sig']);
     if (req.session.xsrf) {
         try {
             const devicesInfo = await fetch('http://61.74.187.4:7100/api/v1/devices', swrHeader);

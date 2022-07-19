@@ -38,8 +38,6 @@ export default function SsrDevice(ssrUser) {
         setSelected(selectNum)
     }
 
-    console.log(devices?.devices[0].model);
-
     return (
         <Layout currentPage={currentPage}>
             {}
@@ -150,7 +148,6 @@ export default function SsrDevice(ssrUser) {
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
     const user = req.session.xsrf;
-    console.log(user);
     
     if (!user?.isLoggedIn) {
       res.setHeader('location', '/')
