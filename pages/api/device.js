@@ -4,11 +4,14 @@ import { sessionOptions } from "/lib/session";
 export default withIronSessionApiRoute(deviceRoute, sessionOptions);
 
 async function deviceRoute(req, res) {
+    const cookieSSID = await req.cookies['ssid'];
+    const cookieSSIDSIG = await req.cookies['ssid.sig'];
+
     const swrHeader = {
         method: "GET",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': 'ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImFzZCJ9fQ==; ssid.sig=bwZRrkAr__D3lG9Nidlunb9KHZM'
+            'Cookie': `ssid=${cookieSSID}; ssid.sig=${cookieSSIDSIG}`
         }
     };
     

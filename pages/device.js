@@ -107,6 +107,7 @@ export default function SsrDevice(ssrUser) {
                                                     height={200}
                                                     width={150}
                                                 />
+                                                {console.log('This part is devices')}
                                             </div>
                                             <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
                                             <p className="text-blue-900">{device.manufacturer}</p>
