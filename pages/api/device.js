@@ -6,11 +6,12 @@ export default withIronSessionApiRoute(deviceRoute, sessionOptions);
 async function deviceRoute(req, res) {
     const swrHeader = {
         method: "GET",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Cookie': 'ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImFzZCJ9fQ==; ssid.sig=bwZRrkAr__D3lG9Nidlunb9KHZM'
+        }
     };
     
-    console.log(req.cookies);
-    console.log(req.cookies['uptempo']);
-    console.log(req.cookies['ssid.sig']);
     if (req.session.xsrf) {
         try {
             const devicesInfo = await fetch('http://61.74.187.4:7100/api/v1/devices', swrHeader);
