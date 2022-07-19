@@ -112,32 +112,22 @@ export default function SsrDevice(ssrUser) {
                                             <p className="text-blue-900">{device.manufacturer}</p>
 
                                             {!device.using &&
-                                                <Link href="/[id]" as={`/${device.marketName}`} >
-                                                    <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                                                        onClick={ async (event) => {
-                                                            !deviceContHandler("POST", device.serial).sucess && event.preventDefault();
-                                                        }
-                                                    }>
-                                                        <a className="mx-1">사용하기</a>
-                                                    </button>
-                                                </Link>
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                                                    onClick={ async (event) => {
+                                                        deviceContHandler("POST", device.serial).sucess ?
+                                                            Router.push('/control')
+                                                        :
+                                                            event.preventDefault()
+                                                    }
+                                                }>
+                                                    <a className="mx-1">사용하기</a>
+                                                </button>
                                             }
                                             {device.using &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
-                                                    onClick={ async () => {await fetchJson(
-                                                            '/api/deviceCont', {
-                                                            method: "POST",
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                            },
-                                                            body: JSON.stringify({
-                                                                serial: device.serial,
-                                                                method: "DELETE"
-                                                            }),
-                                                            credentials: 'include',
-                                                        });
+                                                    onClick={ async () => {
+                                                        deviceContHandler("DELETE", device.serial)
                                                     }
-                                                    // Router.reload('/devices');
                                                 }>
                                                     <a className="mx-1">사용중지</a>
                                                 </button>

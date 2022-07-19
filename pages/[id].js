@@ -25,7 +25,7 @@ export default function DeviceCtrl() {
         <Layout currentPage={currentPage}>
             <div>
                 {console.log(router.query)}
-                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="860" height="140" scrolling="no"frameBorder="0"></iframe>
+                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="160" height="840" scrolling="no"frameBorder="0"></iframe>
             </div>
         </Layout>
     )
