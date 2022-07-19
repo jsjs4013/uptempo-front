@@ -17,10 +17,8 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            <div>
-                Up-tempo sample control page
-
-                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="260" height="840" scrolling="no"frameBorder="0"></iframe>
+            <div style="position:absolute; top:-360px; left:0px;">
+                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="860" height="840" scrolling="no" frameborder="0"></iframe>
             </div>
         </Layout>
   )
