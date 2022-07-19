@@ -10,45 +10,25 @@ import { useEffect } from "react";
 import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
 export default function Signin() {
-  // const { mutateUser } = useUser({
-  //   redirectTo: "/",
-  //   redirectIfFound: true,
-  // });
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
 
-useEffect(() => async() => {
-  // Try redrict to regist jwt token
-  try {
-    const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODEzNDE5NDYxMn0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.WAeoaKIYD8JgvEASsHe3EFB54NCe01KJH9O3J9oc3EA', { withCredentials: true });
-    console.log(redirectToken);
-  } catch (error) {
-    console.log(error.message);
-  }
-  //////////////////////////////////
-
-  // try {
-  //   const body = {
-  //     name: "a",
-  //     email: "a@a.com"
-  //   }
-
-  //   const resultLogin = await axiosJson('/api/login', {
-  //     method: "POST",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(body),
-  //   });
-  //   console.log('dasklhdsakl');
-  //   console.log('ads');
-  //   console.log(resultLogin)
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
-}, []);
+// useEffect(() => async() => {
+//   // Try redrict to regist jwt token
+//   try {
+//     const redirectToken = await axios('http://61.74.187.4:7100/?jwt=eyJhbGciOiJIUzI1NiIsImV4cCI6MTY1ODEzNDE5NDYxMn0.eyJlbWFpbCI6ImFAYS5jb20iLCJuYW1lIjoiYSJ9.WAeoaKIYD8JgvEASsHe3EFB54NCe01KJH9O3J9oc3EA', { withCredentials: true });
+//     console.log(redirectToken);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+//   //////////////////////////////////
+// }, []);
   
   return (
     <Layout>
-      {/* <Form onSubmit={async (event) => {
+      <Form onSubmit={async (event) => {
               event.preventDefault();
 
               const body = {
@@ -82,7 +62,7 @@ useEffect(() => async() => {
                   console.log(error.message);
               }
             }}
-        /> */}
+        />
     </Layout>
   );
 }

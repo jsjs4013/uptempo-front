@@ -16,8 +16,7 @@ async function loginRoute(req, res) {
     data: {
       "name": name,
       "email": email
-    },
-    withCredentials: true
+    }
   };
   
   try {
@@ -30,20 +29,6 @@ async function loginRoute(req, res) {
     }
     req.session.xsrf = xsrftokenBody;
     // console.log(xsrftokenBody);
-    await req.session.save();
-
-    // Try redrict to regist jwt token
-    try {
-      const redirectToken = await axios(xsrftokenJSON.data.redirect, {withCredentials: true});
-      // console.log(redirectToken.headers);
-      // console.log(await req.headers);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).json({name: error.name, message: (error).message });
-    }
-    //////////////////////////////////
-
-    res.setHeader('Set-Cookie', ["ssid=eyJqd3QiOnsiZW1haWwiOiJhQGFiLmNvbSIsIm5hbWUiOiJhIn19; path=/; samesite=lax; httponly;", "ssid.sig=rDjhrXhIH03gQtxcB5XZkPR0kUY; path=/; samesite=lax;"]);
     await req.session.save();
     
     res.json(xsrftokenBody);
