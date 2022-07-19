@@ -17,7 +17,7 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            <div className='absolute left-1/2 '>
+            <div className='relative w-full h-0'>
                 <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="1200" height="1200" scrolling="no" frameBorder="0"></iframe>
             </div>
         </Layout>
