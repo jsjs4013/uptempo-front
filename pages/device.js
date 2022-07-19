@@ -114,20 +114,8 @@ export default function SsrDevice(ssrUser) {
                                             {!device.using &&
                                                 <Link href="/[id]" as={`/${device.marketName}`} >
                                                     <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
-                                                        onClick={ async function deviceContHandler(event) {await fetchJson(
-                                                                '/api/deviceCont', {
-                                                                method: "POST",
-                                                                headers: {
-                                                                    'Content-Type': 'application/json',
-                                                                },
-                                                                body: JSON.stringify({
-                                                                    serial: device.serial,
-                                                                    method: "POST"
-                                                                }),
-                                                                credentials: 'include',
-                                                            });
-
-                                                            !deviceContHandler().success && event.preventDefault();
+                                                        onClick={ async (event) => {
+                                                            !deviceContHandler("POST", device.serial).sucess && event.preventDefault();
                                                         }
                                                     }>
                                                         <a className="mx-1">사용하기</a>
@@ -164,6 +152,21 @@ export default function SsrDevice(ssrUser) {
             </section>
         </Layout>
   )
+}
+
+async function deviceContHandler(method, deviceSerial) {
+    await fetchJson(
+        '/api/deviceCont', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            serial: deviceSerial,
+            method: method
+        }),
+        credentials: 'include',
+    });
 }
 
 export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
