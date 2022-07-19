@@ -8,25 +8,27 @@ async function loginRoute(req, res) {
   const { name, email } = await req.body;
 
   const swrHeader = {
+    url: 'http://61.74.187.4:7100/auth/api/v1/mock',
     method: "POST",
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({
+    data: {
       "name": name,
       "email": email
-    })
+    }
   };
   
   try {
-    const xsrftoken = await fetch('http://61.74.187.4:7100/auth/api/v1/mock', swrHeader);
-    const xsrftokenJSON = await xsrftoken.json();
+    const xsrftoken = await axios(swrHeader);
+    const xsrftokenJSON = xsrftoken;
     const xsrftokenBody = {
-      success: xsrftokenJSON.success,
-      jwt: xsrftokenJSON.redirect.substring(xsrftokenJSON.redirect.indexOf('jwt=') + 4),
+      success: xsrftokenJSON.data.success,
+      jwt: xsrftokenJSON.data.redirect.substring(xsrftokenJSON.data.redirect.indexOf('jwt=') + 4),
       isLoggedIn: true
     }
     req.session.xsrf = xsrftokenBody;
+    // console.log(xsrftokenBody);
     await req.session.save();
     
     res.json(xsrftokenBody);

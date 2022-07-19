@@ -6,9 +6,6 @@ export default withIronSessionApiRoute(deviceRoute, sessionOptions);
 async function deviceRoute(req, res) {
     const swrHeader = {
         method: "GET",
-        headers: {
-            'Authorization': 'Bearer 66a01a1156cb43068acf44546fe42ade6e61a2cad3f745c0bf16ca99c19ffa69',
-        }
     };
     
     if (req.session.xsrf) {
