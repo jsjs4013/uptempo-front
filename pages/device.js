@@ -127,6 +127,7 @@ export default function SsrDevice(ssrUser) {
                                                                 'Content-Type': 'application/json',
                                                             },
                                                             body: JSON.stringify({serial: device.serial}),
+                                                            credentials: 'include',
                                                         });
                                                     }
                                                     // Router.reload('/devices');

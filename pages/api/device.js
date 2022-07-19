@@ -8,7 +8,7 @@ async function deviceRoute(req, res) {
         method: "GET",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': 'ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImFzZCJ9fQ==; ssid.sig=bwZRrkAr__D3lG9Nidlunb9KHZM'
+            'Cookie': 'ssid=eyJqd3QiOnsiZW1haWwiOiJhQGEuY29tIiwibmFtZSI6ImEifSwiY3NyZlNlY3JldCI6InZ6MWZuTk05SW5CaE1pcFo0SXpiN2dMMyJ9; ssid.sig=uQKHNuuGhC6R_XOcDhcWUSevl-Q'
         }
     };
     

@@ -7,17 +7,21 @@ async function stopUsing(req, res) {
     const { serial } = await req.body;
     const useremail = req.session.xsrf.useremail;
 
+    const cookieSSID = await req.cookies['ssid'];
+    const cookieSSIDSIG = await req.cookies['ssid.sig'];
+    console.log(cookieSSID);
+    console.log(cookieSSIDSIG);
     const swrHeader = {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer 66a01a1156cb43068acf44546fe42ade6e61a2cad3f745c0bf16ca99c19ffa69',
+            'Cookie': `ssid=${cookieSSID}; ssid.sig=${cookieSSIDSIG}`
         }
     };
     
     if (req.session.xsrf) {
         try {
-            const devicesInfo = await fetch(`http://61.74.187.4:7100/api/v1/users/${useremail}/devices/${serial}`, swrHeader);
+            const devicesInfo = await fetch(`http://61.74.187.4:7100/api/v1/user/devices/${serial}`, swrHeader);
 
             const deviceInfoJSON = await devicesInfo.json();
 
