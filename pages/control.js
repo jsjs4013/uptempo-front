@@ -20,7 +20,7 @@ export default function Control() {
             <div>
                 Up-tempo sample control page
 
-                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="160" height="840" scrolling="no"frameBorder="0"></iframe>
+                <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="260" height="840" scrolling="no"frameBorder="0"></iframe>
             </div>
         </Layout>
   )
