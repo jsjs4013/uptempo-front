@@ -114,7 +114,7 @@ export default function SsrDevice(ssrUser) {
                                             {!device.using &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                                                     onClick={ async (event) => {
-                                                        const deviceCont = deviceContHandler("POST", device.serial);
+                                                        const deviceCont = await deviceContHandler("POST", device.serial);
                                                         deviceCont.success ?
                                                             Router.push('/control')
                                                         :
