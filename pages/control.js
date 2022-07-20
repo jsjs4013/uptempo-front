@@ -24,10 +24,10 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            {console.log(userDevice?.isDevice)}
+            {console.log(!userDevice?.isDevice)}
             <div className='relative w-2/6 h-1/2 overflow-hidden'>
                 {
-                    userDevice?.isDevice &&
+                    !userDevice?.isDevice &&
                     <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} width="1250" height="1200" scrolling="no" frameBorder="300"></iframe>
                 }
             </div>
