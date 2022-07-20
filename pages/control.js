@@ -17,14 +17,14 @@ export default function Control() {
     let currentPage = 1;
 
     const { user } = useUser();
-    const { device } = useGetDevice(user, '/device', true);
+    const { userDevice } = useGetDevice(user);
 
     return (
         <Layout currentPage={currentPage}>
-            {console.log(device)}
+            {console.log(userDevice?.isDevice)}
             <div className='relative w-2/6 h-1/2 overflow-hidden'>
                 {
-                    device?.isDevice &&
+                    userDevice?.isDevice &&
                     <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} width="1250" height="1200" scrolling="no" frameBorder="300"></iframe>
                 }
             </div>
