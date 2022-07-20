@@ -25,11 +25,11 @@ export default function Control() {
     return (
         <Layout currentPage={currentPage}>
             {console.log(!userDevice?.isChangeDevice)}
-            <div className='relative w-full'>
+            <div className='relative w-full h-96'>
                 {
                     !userDevice?.isChangeDevice &&
-                    <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} width='1200' scrolling="no"
-                        className='absolute h-full'></iframe>
+                    <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} scrolling="no"
+                        className='absolute w-1/2 h-full'></iframe>
                 }
             </div>
         </Layout>
