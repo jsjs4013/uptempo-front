@@ -7,8 +7,6 @@ import Router from 'next/router';
 import { useEffect, useState } from 'react'
 import useUser from '../lib/useUser';
 import useDevices from '../lib/useDevices';
-import useGetDevice from '../lib/useGetDevice';
-import device from './api/device';
 
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
@@ -32,7 +30,6 @@ export default function SsrDevice(ssrUser) {
     const { user } = useUser();
     let currentPage = 2
     const { devices } = useDevices(user);
-    const { mutateGetDev } = useGetDevice(user);
     
     const [selected, setSelected] = useState([0, 0]);
 
@@ -118,9 +115,7 @@ export default function SsrDevice(ssrUser) {
                                                     onClick={ async (event) => {
                                                         const deviceCont = await deviceContHandler("POST", device.serial);
                                                         deviceCont.success ?
-                                                            (
-                                                                mutateGetDev(device.serial)
-                                                            )
+                                                            Router.push('/control')
                                                         :
                                                             event.preventDefault();
                                                     }
