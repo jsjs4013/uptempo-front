@@ -19,6 +19,7 @@ async function deviceRoute(req, res) {
         try {
             const devicesInfo = await fetch('http://61.74.187.4:7100/api/v1/devices', swrHeader);
             const deviceInfoJSON = await devicesInfo.json();
+            deviceInfoJSON.filteredDev = deviceInfoJSON.devices.filter((device) => device.present)
 
             res.json(deviceInfoJSON);
         } catch (error) {

@@ -85,7 +85,7 @@ export default function SsrDevice(ssrUser) {
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
                             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-                                <p className="text-gray-500 dark:text-gray-900">{devices?.length} Items</p>
+                                <p className="text-gray-500 dark:text-gray-900">{devices?.filteredDev.length} Items</p>
                                 {/* <div className="flex items-center">
                                     <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
                                     <label htmlFor="underline_select" className="sr-only">Underline select</label>
@@ -100,7 +100,7 @@ export default function SsrDevice(ssrUser) {
                             
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {
-                                    devices?.devices.filter((device) => device.present).map((device) => (
+                                    devices?.filteredDev.map((device) => (
                                         <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
                                             <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
                                                 <Image
