@@ -17,7 +17,7 @@ export default function Control() {
     let currentPage = 1;
 
     const { user } = useUser();
-    const { userDevice } = useGetDevice(user);
+    const { userDevice } = useGetDevice(user, '/device', true);
 
     return (
         <Layout currentPage={currentPage}>
