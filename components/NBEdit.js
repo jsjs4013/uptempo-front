@@ -58,7 +58,7 @@ export default function NBEdit(props) {
   return (
     <div className="grid w-full shadow-2xl p-2 rounded-lg">
         <button
-          className="w-24 py-2 shadow-sm px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
+          className="w-24 py-2 px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
           onClick={props.clickListButton}
         >
           ←  목록으로
@@ -68,7 +68,8 @@ export default function NBEdit(props) {
         <div className="grid grid-cols-10 gap-8 py-2">
           <input
             className="col-span-7 p-2.5 border-b-2 border-gray-500 my-1 active:border-gray-700 focus:border-gray-700"
-            placeholder="제목을 입력하세요"
+            placeholder="제목을 입력하세요 (50자 이내)"
+            maxLength={50}
             onChange={(e) => {
               e.preventDefault;
               handleChangeSubject(e);
@@ -77,6 +78,7 @@ export default function NBEdit(props) {
           <input
             className="col-span-3 p-2.5 border-b-2 border-gray-500 my-1"
             placeholder="작성자"
+            maxLength={20}
             onChange={(e) => {
               e.preventDefault;
               handleChangeWriter(e);
@@ -96,7 +98,8 @@ export default function NBEdit(props) {
       <div className="justify-self-end py-4">
         <input
           className="border-2 rounded-md py-2 pl-3 border-gray-500"
-          placeholder="글 비밀번호"
+          placeholder="글 비밀번호 (8자 이내)"
+          maxLength={8}
           type={"password"}
           onChange={(e) => {
             e.preventDefault;
