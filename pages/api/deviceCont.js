@@ -32,7 +32,6 @@ async function deviceCont(req, res) {
 
             await req.session.save();
 
-            console.log(deviceInfoJSON);
             res.json({
                 success: true,
                 ...deviceInfoJSON
