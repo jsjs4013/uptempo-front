@@ -58,7 +58,7 @@ export default function NBEdit(props) {
   return (
     <div className="grid w-full shadow-2xl p-2 rounded-lg">
         <button
-          className="w-24 py-2 shadow-sm px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
+          className="w-24 py-2 px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
           onClick={props.clickListButton}
         >
           ←  목록으로
