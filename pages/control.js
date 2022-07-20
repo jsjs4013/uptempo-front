@@ -15,7 +15,10 @@ import { sessionOptions } from '../lib/session';
 export default function Control() {
     let currentPage = 1;
 
-    const { user } = useUser();
+    const { user } = useUser({
+        redirectTo: 'device',
+        redirectDevice: true
+    });
     const { useDevice } = useGetDevice(user, '/device', true);
 
     return (
