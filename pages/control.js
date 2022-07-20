@@ -16,21 +16,16 @@ import Router from 'next/router'
 export default function Control() {
     let currentPage = 1;
 
-    const { user } = useUser({
-        redirectTo: 'device',
-        redirectDevice: true
-    });
-    const { useDevice } = useGetDevice(user, '/device', true);
+    const { user } = useUser();
+    const { device } = useGetDevice(user, '/device', true);
 
     return (
         <Layout currentPage={currentPage}>
-            {console.log(useDevice)}
+            {console.log(device)}
             <div className='relative w-2/6 h-1/2 overflow-hidden'>
                 {
-                    useDevice?.isDevice ?
-                    <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="1250" height="1200" scrolling="no" frameBorder="300"></iframe>
-                    :
-                    Router.push('/device')
+                    device?.isDevice &&
+                    <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} width="1250" height="1200" scrolling="no" frameBorder="300"></iframe>
                 }
             </div>
         </Layout>
