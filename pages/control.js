@@ -11,6 +11,7 @@ import useGetDevice from '../lib/useGetDevice'
 import ssrBasecode from '../lib/ssrBasecode'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
+import Router from 'next/router'
 
 export default function Control() {
     let currentPage = 1;
@@ -29,8 +30,7 @@ export default function Control() {
                     useDevice?.isDevice ?
                     <iframe src="http://61.74.187.4:7100/#!/control/R3CT104SAYT" width="1250" height="1200" scrolling="no" frameBorder="300"></iframe>
                     :
-                    <div className='relative w-2/6 h-1/2'>
-                    </div>
+                    Router.push('/device')
                 }
             </div>
         </Layout>
