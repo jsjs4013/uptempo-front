@@ -56,16 +56,16 @@ export default function NBEdit(props) {
   useEffect(() => {}, []);
 
   return (
-    <div className="grid w-full shadow-2xl p-8 rounded-lg">
+    <div className="grid w-full shadow-2xl p-2 rounded-lg">
         <button
-          className="w-24 h-10 shadow-lg px-2 py-1 border-2 font-medium rounded-md shadow-sm hover:bg-gray-500 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out ml-1"
+          className="w-24 py-2 shadow-sm px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
           onClick={props.clickListButton}
         >
-          목록으로
+          ←  목록으로
         </button>
-        <div className="pt-4 font-bold px-2 text-xl">글 작성하기</div>
-      <div className="border-t-2 border-b-2 my-2 py-2 border-gray-700">
-        <div className="grid grid-cols-10 gap-4 py-2">
+        <div className="pt-4 font-bold pl-5 text-2xl">글 작성하기</div>
+      <div className="border-b-2 mx-5 my-2 py-2 border-gray-700 px-4">
+        <div className="grid grid-cols-10 gap-8 py-2">
           <input
             className="col-span-7 p-2.5 border-b-2 border-gray-500 my-1 active:border-gray-700 focus:border-gray-700"
             placeholder="제목을 입력하세요"
@@ -84,7 +84,7 @@ export default function NBEdit(props) {
           ></input>
         </div>
         <textarea
-          className="p-2.5 w-full border-gray-500 h-96 my-2 resize-none"
+          className="p-2.5 w-full h-96 my-2 resize-none"
           placeholder="내용을 입력하세요."
           wrap="hard"
           onChange={(e) => {

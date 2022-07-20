@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function NBList(props) {
   return (
-    <div className="grid">
+    <div className="shadow-sm p-2 rounded">
       <div className="">
         <button
           className="bg-[#2b3d51] hover:bg-slate-900 text-white font-bold rounded w-24 h-12 max-w-lg min-w-fit ease-in-out focus:shadow-lg active:bg-slate-700 active:shadow-lg transition"
