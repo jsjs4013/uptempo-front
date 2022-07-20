@@ -30,12 +30,12 @@ async function userGetDevice(req, res) {
 
                 res.json({
                     success: true,
-                    isDevice: false
+                    isChangeDevice: true
                 });
             } else {
                 res.json({
                     success: true,
-                    isDevice: true
+                    isChangeDevice: false
                 });
             }
         } catch (error) {
