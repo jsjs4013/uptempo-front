@@ -8,16 +8,16 @@ export default function NBArticle(props) {
   //const [article, setArticle] = useState(props.article);
 
   return (
-    <div className="w-full shadow-2xl p-8 rounded-lg my-8">
+    <div className="w-full shadow-2xl p-2 rounded-lg">
       <div>
         <button
-          className="px-2 mb-8 w-24 h-10 border-2 font-medium rounded-md shadow-sm hover:bg-gray-500 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out ml-1 shadow-lg"
+          className="w-24 py-2 px-2 border-2 font-bold rounded-md shadow-sm hover:bg-gray-700 hover:text-white hover:shadow-lg focus:bg-gray-500 focus:shadow-sm active:bg-gray-500 active:shadow-sm transition duration-150 ease-in-out mt-2 mb-4"
           onClick={props.clickListButton}
         >
-          목록으로
+          ←  목록으로
         </button>
       </div>
-      <div className="flex rounded-sm border-b-2 pb-2 border-gray-600 place-content-between">
+      <div className="flex rounded-sm border-b-2 pb-2 border-gray-600 place-content-between p-4 mx-4">
         <div className="px-4 text-2xl font-bold">{props.article.subject}</div>
         <div className="grid grid-cols-2 px-8">
           <div className="">

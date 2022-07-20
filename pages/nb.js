@@ -48,7 +48,6 @@ export default function NB() {
   }
 
   const registerArticle = async (contents) => {
-    console.log("reg func called");
     axios
       .post("http://61.74.187.4:8083/api/v1/nb", {
         content: contents.content,
