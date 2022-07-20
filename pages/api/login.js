@@ -26,7 +26,8 @@ async function loginRoute(req, res) {
       success: xsrftokenJSON.data.success,
       jwt: xsrftokenJSON.data.redirect.substring(xsrftokenJSON.data.redirect.indexOf('jwt=') + 4),
       isLoggedIn: true,
-      useremail: email
+      useremail: email,
+      device: false
     }
     req.session.xsrf = xsrftokenBody;
     // console.log(xsrftokenBody);

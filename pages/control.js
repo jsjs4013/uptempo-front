@@ -7,12 +7,16 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import useUser from '../lib/useUser'
 
+import ssrBasecode from '../lib/ssrBasecode'
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../lib/session';
+
 export default function Control() {
     let currentPage = 1;
 
     const { user } = useUser({
-        redirectTo: "/",
-        redirectIfFound: false,
+        redirectTo: "/device",
+        redirectDevice: true,
     });
 
     return (
@@ -23,3 +27,8 @@ export default function Control() {
         </Layout>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
+    return ssrBasecode(req, res, 1);
+  },
+  sessionOptions)
