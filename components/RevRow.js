@@ -2,7 +2,7 @@ export default function RevRow(props) {
   return (
     <>
       {props.block ? (
-        <div className="bg-red-500 border border-r border-x-gray-200 border-y-red-400 py-1 border-y rounded-xs opacity-80">
+        <div className="bg-slate-600 border border-r border-x-gray-200 border-y-slate-500 py-1 border-y rounded-xs">
           <br />
         </div>
       ) : (
