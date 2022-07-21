@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
-const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
-const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
+const company = [{key:0, category:'ALL'}, {key:1, category:'SAMSUNG'}, {key:2, category:'LG'}, {key:3, category:'etc'}]
+const os_list = [{key:0, category:'ALL'}, {key:1, category:'ANDROID'}, {key:2, category:'etc'}]
 
 export default function CategoryChoose(props) {
   // 제조사인지 OS인지 확인할 수 있는 변수 할당

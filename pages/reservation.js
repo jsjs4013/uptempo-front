@@ -9,7 +9,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import RevModal from "../components/RevModal";
 import RevTable from "../components/RevTable";
-import { ko } from 'date-fns/esm/locale'
+// import { ko } from 'date-fns/esm/locale'
+import ssrBasecode from "../lib/ssrBasecode";
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../lib/session';
 
 export default function Reservation() {
   let currentPage = 4;
@@ -271,7 +274,7 @@ export default function Reservation() {
                   showMonthDropdown
                   showYearDropdown
                   minDate={new Date()}
-                  locale={ko}
+                  // locale={ko}
                   dropdownMode="select"
                   customInput={<CustomButton />}
                 />
@@ -473,3 +476,8 @@ export default function Reservation() {
     </Layout>
   );
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
+  return ssrBasecode(req, res);
+},
+sessionOptions)

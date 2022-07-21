@@ -8,9 +8,8 @@ export default function Navbar(props) {
     const navbarContent = [
         {id:1, content:'Control', imageIcon:ControlIcon, route:'/control'},
         {id:2, content:'Device', imageIcon:DevicelIcon, route:'/device'},
-        {id:3, content:'Setting', imageIcon:DevicelIcon, route:'/setting'},
-        {id:4, content:'단말 예약', imageIcon:DevicelIcon, route:'/reservation'},
-        {id:5, content:'게시판', imageIcon:ControlIcon, route:'/nb'}
+        {id:3, content:'단말 예약', imageIcon:DevicelIcon, route:'/reservation'},
+        {id:4, content:'게시판', imageIcon:ControlIcon, route:'/nb'}
     ]
 
     const div = []

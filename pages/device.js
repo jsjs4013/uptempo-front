@@ -16,8 +16,8 @@ import ssrBasecode from '../lib/ssrBasecode';
 import deviceContHandler from '../lib/deviceContHandler';
 import device from './api/device';
 
-const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
-const os_list = [{key:0, category:'ALL'}, {key:1, category:'IOS'}, {key:2, category:'ANDROID'}, {key:3, category:'etc'}]
+const company = [{key:0, category:'ALL'} ,{key:1, category:'SAMSUNG'}, {key:2, category:'LG'}, {key:3, category:'etc'}]
+const os_list = [{key:0, category:'ALL'}, {key:1, category:'ANDROID'}, {key:2, category:'etc'}]
 
 const DynamicDesktop = dynamic( // For no SSR
   () => import('../components/Device_screen').then((mod) => mod.Desktop),
@@ -100,7 +100,17 @@ export default function SsrDevice(ssrUser) {
                             
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {
-                                    devices?.filteredDev.map((device) => (
+                                    devices?.filteredDev.filter((device) => {
+                                        let choose;
+                                        
+                                        if (selected[0] && selected[1] && selected[0] < company.length-1 && selected[1] < os_list.length-1) {
+                                            choose = device.manufacturer === company[selected[0]].category
+                                        } else if (selected[0] === company.length-1) {
+                                            choose = 
+                                        }
+
+                                        return choose;
+                                    }).map((device) => (
                                         <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
                                             <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
                                                 <Image
@@ -114,7 +124,7 @@ export default function SsrDevice(ssrUser) {
                                             <p className="text-blue-900">{device.manufacturer}</p>
 
                                             {!device.using && !device.owner &&
-                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700"
                                                     onClick={ async (event) => {
                                                         const deviceCont = await deviceContHandler("POST", device.serial);
                                                         deviceCont.success ?
@@ -126,14 +136,24 @@ export default function SsrDevice(ssrUser) {
                                                     <a className="mx-1">사용하기</a>
                                                 </button>
                                             }
-                                            {device.owner && device.owner.email === user.useremail &&
-                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
-                                                    onClick={ async () => {
+                                            {device.owner &&
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none"
+                                                    onClick={device.owner.email === user.useremail ?
+                                                        async () => {
                                                         const deviceCont = await deviceContHandler("DELETE", device.serial)
                                                         deviceCont.success && mutateDevice()
                                                     }
+                                                    :
+                                                        (event) => {
+                                                            event.preventDefault()
+                                                        }
                                                 }>
-                                                    <a className="mx-1">사용중지</a>
+                                                    {
+                                                        device.owner.email === user.useremail ?
+                                                            <a className="mx-1">사용중지</a>
+                                                            :
+                                                            <a className="mx-1">다른사용자가 사용중</a>
+                                                    }
                                                 </button>
                                             }
                                         </div>

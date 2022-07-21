@@ -24,7 +24,6 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            {console.log(!userDevice?.isChangeDevice)}
             <div className='relative w-full h-96'>
                 {
                     !userDevice?.isChangeDevice &&

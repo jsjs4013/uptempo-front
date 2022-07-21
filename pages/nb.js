@@ -6,8 +6,11 @@ import NBList from "../components/NBList";
 import NBEdit from "../components/NBEdit";
 import NBArticle from "../components/NBArticle";
 import { list } from "postcss";
+import ssrBasecode from "../lib/ssrBasecode";
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '../lib/session';
 
-export default function NB() {
+export default function NB(ssrUser) {
   let currentPage = 5;
   const [mode, setMode] = useState(0);
   const [article, setArticle] = useState({});
@@ -138,3 +141,8 @@ export default function NB() {
     </Layout>
   );
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req, res, }) {
+  return ssrBasecode(req, res);
+},
+sessionOptions)
