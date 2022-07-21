@@ -11,7 +11,7 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
 
 export default function NB(ssrUser) {
-  let currentPage = 5;
+  let currentPage = 4;
   const [mode, setMode] = useState(0);
   const [article, setArticle] = useState({});
   const [pageNum, setPageNum] = useState(1);

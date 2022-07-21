@@ -15,7 +15,7 @@ import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
 
 export default function Reservation() {
-  let currentPage = 4;
+  let currentPage = 3;
   const [data, setData] = useState(dummyData.regData); // 임시 데이터
   const [now, setNow] = useState(new Date());
   const [deviceName, setDeviceName] = useState("Galaxy S22");
