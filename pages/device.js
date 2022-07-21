@@ -113,7 +113,7 @@ export default function SsrDevice(ssrUser) {
                                             <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
                                             <p className="text-blue-900">{device.manufacturer}</p>
 
-                                            {!device.using &&
+                                            {!device.using && !device.owner &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
                                                     onClick={ async (event) => {
                                                         const deviceCont = await deviceContHandler("POST", device.serial);
