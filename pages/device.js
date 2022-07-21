@@ -97,16 +97,19 @@ export default function SsrDevice(ssrUser) {
                                     </select>
                                 </div> */}
                             </div>
+                            {console.log('Render')}
                             
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {
                                     devices?.filteredDev.filter((device) => {
                                         let choose;
                                         
-                                        if (selected[0] && selected[1] && selected[0] < company.length-1 && selected[1] < os_list.length-1) {
-                                            choose = device.manufacturer === company[selected[0]].category
+                                        if (selected[0] && selected[0] < company.length-1) {
+                                            choose = device.manufacturer === company[selected[0]].category;
                                         } else if (selected[0] === company.length-1) {
-                                            choose = 
+                                            choose = !company.some(company => company.category === device.manufacturer);
+                                        } else {
+                                            choose = true;
                                         }
 
                                         return choose;
@@ -125,25 +128,36 @@ export default function SsrDevice(ssrUser) {
 
                                             {!device.using && !device.owner &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700"
-                                                    onClick={ async (event) => {
-                                                        const deviceCont = await deviceContHandler("POST", device.serial);
-                                                        deviceCont.success ?
-                                                            mutateUser() && Router.push('/control')
+                                                    onClick={!user.device ?
+                                                        async (event) => {
+                                                            const deviceCont = await deviceContHandler("POST", device.serial);
+                                                            deviceCont.success ?
+                                                                mutateUser() && Router.push('/control')
+                                                            :
+                                                                event.preventDefault();
+                                                        }
                                                         :
-                                                            event.preventDefault();
-                                                    }
+                                                        (event) => {
+                                                            event.preventDefault()
+                                                        }
+                                                    
                                                 }>
-                                                    <a className="mx-1">사용하기</a>
+                                                    {
+                                                        !user.device ?
+                                                            <a className="mx-1">사용하기</a>
+                                                            :
+                                                            <a className="mx-1">사용불가</a>
+                                                    }
                                                 </button>
                                             }
                                             {device.owner &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none"
                                                     onClick={device.owner.email === user.useremail ?
                                                         async () => {
-                                                        const deviceCont = await deviceContHandler("DELETE", device.serial)
-                                                        deviceCont.success && mutateDevice()
-                                                    }
-                                                    :
+                                                            const deviceCont = await deviceContHandler("DELETE", device.serial)
+                                                            deviceCont.success && mutateDevice() && mutateUser()
+                                                        }
+                                                        :
                                                         (event) => {
                                                             event.preventDefault()
                                                         }
