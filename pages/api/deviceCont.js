@@ -34,6 +34,7 @@ async function deviceCont(req, res) {
 
             res.json({
                 success: true,
+                method: method,
                 ...deviceInfoJSON
             });
         } catch (error) {
