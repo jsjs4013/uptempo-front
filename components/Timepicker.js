@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 export default function TimePicker (props) {
 
     const H_List = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+    const [afternoon, setAfternoon] = useState (false);
 
     return (
       <div className="flex">
@@ -27,8 +30,8 @@ export default function TimePicker (props) {
               name="ampm"
               className="bg-transparent font-bold text-lg appearance-none outline-none px-1 cursor-pointer hover:underline-offset-4"
             >
-              <option value="am">AM</option>
-              <option value="pm">PM</option>
+              <option value="false">AM</option>
+              <option value="true">PM</option>
             </select>
           </div>
         </div>
