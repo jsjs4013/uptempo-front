@@ -24,7 +24,7 @@ export default function Control() {
 
     return (
         <Layout currentPage={currentPage}>
-            <div className='relative w-full h-96'>
+            <div className='relative w-full h-max'>
                 {
                     !userDevice?.isChangeDevice &&
                     <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} scrolling="no"
