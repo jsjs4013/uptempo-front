@@ -126,7 +126,7 @@ export default function SsrDevice(ssrUser) {
                                                     <a className="mx-1">사용하기</a>
                                                 </button>
                                             }
-                                            {device.using &&
+                                            {device.owner && device.owner.email === user.useremail &&
                                                 <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
                                                     onClick={ async () => {
                                                         const deviceCont = await deviceContHandler("DELETE", device.serial)
