@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import RevModal from "../components/RevModal";
 import RevTable from "../components/RevTable";
+import { ko } from 'date-fns/esm/locale'
 
 export default function Reservation() {
   let currentPage = 4;
@@ -269,6 +270,8 @@ export default function Reservation() {
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
+                  minDate={new Date()}
+                  locale={ko}
                   dropdownMode="select"
                   customInput={<CustomButton />}
                 />
