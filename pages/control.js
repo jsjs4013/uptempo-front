@@ -27,7 +27,7 @@ export default function Control() {
                 {
                     !userDevice?.isChangeDevice &&
                     <iframe src={`http://61.74.187.4:7100/#!/control/${user?.device}`} scrolling="no"
-                        className='absolute w-full h-full'></iframe>
+                        className='absolute w-full'></iframe>
                 }
         </Layout>
   )
