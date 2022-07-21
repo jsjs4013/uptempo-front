@@ -2,7 +2,6 @@ import Layout from "../components/Layout"
 import Navbar from "../components/Navbar";
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from "react";
-import DeviceBox from "../components/DeviceBox";
 import { Tab } from '@headlessui/react'
 import AutoDevicePN from "../components/AutoDevicePN";
 import AutoAppPN from "../components/AutoAppPN";
@@ -19,19 +18,50 @@ export default function Auto() {
     ]
 
     let apps = [
-        {ano : 1, serviceName : 'KT 기가지니'},
-        {ano : 2, serviceName : '올레 tv play'},
-        {ano : 3, serviceName : '원내비'},
-        {ano : 4, serviceName : '마이 케이티'},
-        {ano : 5, serviceName : 'KT 멤버쉽'},
-        {ano : 6, serviceName : '기가지니 홈 IoT'},
-    ]
+      {
+        ano: 1,
+        serviceName: "KT 기가지니",
+        activity: "",
+        icon: "appicon/ktGigaGeine_img.png",
+      },
+      {
+        ano: 2,
+        serviceName: "올레 tv play",
+        activity: "",
+        icon: "appicon/ollehTvPlay_img.png",
+      },
+      {
+        ano: 3,
+        serviceName: "원내비",
+        activity: "",
+        icon: "../appicon/oneNavy_img.png",
+      },
+      {
+        ano: 4,
+        serviceName: "마이 케이티",
+        activity: "",
+        icon: "../appicon/myKt_img.png",
+      },
+      {
+        ano: 5,
+        serviceName: "KT 멤버쉽",
+        activity: "",
+        icon: "appicon/ktMembership_img.png",
+      },
+      {
+        ano: 6,
+        serviceName: "기가지니 홈 IoT",
+        activity: "",
+        icon: "appicon/gigaGenieHomeIoT_img.png",
+      },
+    ];
 
     const [mode, setMode] = useState(1);
     const [deviceList, setDeviceList] = useState(devices);
     const [appList, setAppList] = useState(apps);
     const [selectedDevice, setSelectedDevice] = useState(new Map());
-    const [selectedApp, setSelectedApp] = useState(new Map());
+    const [selectedApp, setSelectedApp] = useState();
+    const [selectedDate, setSelectedDate] = useState();
 
     const DynamicDesktop = dynamic(
       // For no SSR
@@ -58,30 +88,40 @@ export default function Auto() {
             <div className="lg:flex lg:-mx-2" />
             <div className="border rounded shadow-lg p-2 max-h-screen mt-3">
               {mode === 1 ? (
-                deviceList !== undefined ? (
-                  <AutoDevicePN
-                    onClickNext={() => {
-                      setMode(2);
-                    }}
-                    deviceList={deviceList}
-                    selectedDevice={selectedDevice}
-                  />
-                ) : null
-              ) : mode === 2 ? (
-                <AutoAppPN
+                appList !== undefined ? (
+                  <AutoAppPN
                   appList={appList}
-                  onClickPrev={() => {
-                    setMode(1);
-                  }}
                   onClickNext={() => {
-                    setMode(3);
+                    setMode(2);
+                  }}
+                  appSelect={(app)=>{
+                    setSelectedApp(app);
                   }}
                 />
+                 
+                ) : null
+              ) : mode === 2 ? (
+                deviceList !== undefined ? (
+                <AutoDevicePN
+                onClickPrev={() => {
+                  setMode(1);
+                }}
+                onClickNext={() => {
+                  setMode(3);
+                }}
+                deviceList={deviceList}
+                selectedDevice={selectedDevice}
+                selectDevice= {(device) => {
+                  setSelectedDevice(selectedDevice.set(device.deviceName,device));
+                }}
+              />) : null
               ) : mode === 3 ? (
                 <AutoAcceptPN
                   onClickPrev={() => {
                     setMode(2);
                   }}
+                  selectedApp={selectedApp}
+                  selectedDevice={selectedDevice}
                 />
               ) : null}
             </div>
