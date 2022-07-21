@@ -7,14 +7,13 @@ import Router from 'next/router';
 import { useEffect, useState } from 'react'
 import useUser from '../lib/useUser';
 import useDevices from '../lib/useDevices';
-import RenderOnClick from '../components/RenderOnClick';
 
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '../lib/session';
 
 import fetchJson from "../lib/fetchJson";
 import ssrBasecode from '../lib/ssrBasecode';
-import deviceContHandler from '../components/RenderOnClick';
+import deviceContHandler from '../lib/deviceContHandler';
 import device from './api/device';
 
 const company = [{key:0, category:'ALL'} ,{key:1, category:'APPLE'}, {key:2, category:'SAMSUNG'}, {key:3, category:'LG'}, {key:4, category:'etc'}]
@@ -36,11 +35,6 @@ export default function SsrDevice(ssrUser) {
     const { devices } = useDevices(user);
     
     const [selected, setSelected] = useState([0, 0]);
-    const [shouldRender, setShouldRender] = useState(false);
-
-    function handleClick() {
-        setShouldRender(!shouldRender);
-    }
 
     function setSelect(selectNum) {
         setSelected(selectNum)
@@ -91,7 +85,7 @@ export default function SsrDevice(ssrUser) {
 
                         <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
                             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-                                <p className="text-gray-500 dark:text-gray-900">{devices?.filteredDev.length} Items</p>
+                                <p className="text-gray-500 dark:text-gray-900">{devices?.length} Items</p>
                                 {/* <div className="flex items-center">
                                     <p className="text-gray-500 dark:text-gray-900 px-3">Sort</p>
                                     <label htmlFor="underline_select" className="sr-only">Underline select</label>
@@ -106,7 +100,7 @@ export default function SsrDevice(ssrUser) {
                             
                             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                                 {
-                                    devices?.filteredDev.map((device) => (
+                                    devices?.devices.filter((device) => device.present).map((device) => (
                                         <div key={device.serial} className="flex flex-col items-center justify-center max-w-lg mx-auto">
                                             <div className='bg-gradient-to-r hover:scale-105 duration-300 ease-in-out drop-shadow-md'>
                                                 <Image
@@ -119,10 +113,29 @@ export default function SsrDevice(ssrUser) {
                                             <h4 className="mt-2 text-lg font-medium text-gray-900 dark:text-gray-900">{device.marketName}</h4>
                                             <p className="text-blue-900">{device.manufacturer}</p>
 
-                                            <button className='w-full'
-                                                onClick={handleClick}>
-                                                <RenderOnClick status={shouldRender} serial={device.serial} />
-                                            </button>
+                                            {!device.using &&
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
+                                                    onClick={ async (event) => {
+                                                        const deviceCont = await deviceContHandler("POST", device.serial);
+                                                        deviceCont.success ?
+                                                            mutateUser() && Router.push('/control')
+                                                        :
+                                                            event.preventDefault();
+                                                    }
+                                                }>
+                                                    <a className="mx-1">사용하기</a>
+                                                </button>
+                                            }
+                                            {device.using &&
+                                                <button className="flex items-center justify-center w-full px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700"
+                                                    onClick={ async () => {
+                                                        const deviceCont = await deviceContHandler("DELETE", device.serial)
+                                                        deviceCont.success && mutateUser()
+                                                    }
+                                                }>
+                                                    <a className="mx-1">사용중지</a>
+                                                </button>
+                                            }
                                         </div>
                                     ))
                                 }
