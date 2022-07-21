@@ -1,4 +1,4 @@
-export default function DeviceBox(props) {
+export default function AutoDeviceBox(props) {
     return (
       <>
         {props.deviceInfo !== undefined ? (

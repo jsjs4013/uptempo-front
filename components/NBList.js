@@ -43,7 +43,7 @@ export default function NBList(props) {
                         >
                           {item.subject}
                         </td>
-                        <td className="px-4 py-4 text-lg">{item.writer}</td>
+                        <td className="px-4 py-4 text-lg">{item.writter}</td>
                         <td className="px-4 py-4 text-lg">{item.date}</td>
                       </tr>
                     </>
