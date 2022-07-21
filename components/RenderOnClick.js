@@ -1,18 +1,30 @@
 import useSWR from "swr";
 import fetchJson from "../lib/fetchJson";
 
+import useUser from "../lib/useUser";
+
 import Router from "next/router";
 
 export default function RenderOnClick(props) {
     return (
-        props.status ?
-            <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700" >
-                <DeviceContHandler method="POST" deviceSerial={props.serial} />
-            </div>
+        props.status === props.serial ?
+            props.method === "POST" ?
+                <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700" >
+                    <DeviceContHandler method={props.method} deviceSerial={props.serial} />
+                </div>
+                :
+                <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" >
+                    <DeviceContHandler method={props.method} deviceSerial={props.serial} />
+                </div>
             :
-            <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" >
-                <DeviceContHandler method="DELETE" deviceSerial={props.serial} />
-            </div>
+            props.method === "POST" ?
+                <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-800 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" >
+                    <a className="mx-1">사용하기</a>
+                </div>
+                :
+                <div className="flex items-center justify-center px-2 py-2 mt-4 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-800 rounded-md hover:bg-red-700 focus:outline-none focus:bg-gray-700" >
+                    <a className="mx-1">사용중지</a>
+                </div>
     );
 }
 
@@ -31,7 +43,6 @@ function DeviceContHandler(props) {
 
     return (
         <>
-            {console.log(data?.success)}
             {
                 data?.success ?
                 (
